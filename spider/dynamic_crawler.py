@@ -1,4 +1,4 @@
-from crawler import utils
+from spider import utils
 
 
 class DynamicCrawler:
@@ -63,6 +63,7 @@ class DynamicCrawler:
             # TODO: add more reply type and mapping
             else:
                 print("type: {} desc: {} card: {} ".format(dynamic_type, card["desc"], card["card"]))
+                # TODO: raise an exception
             tuples.append((r_type, oid))
 
         return has_more, next_offset, tuples

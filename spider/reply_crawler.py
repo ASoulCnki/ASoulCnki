@@ -1,4 +1,4 @@
-from crawler import utils
+from spider import utils
 from throttle import Throttle
 
 

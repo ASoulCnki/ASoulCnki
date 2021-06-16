@@ -1,0 +1,6 @@
+.gitignore
+*.pyc
+.idea/
+venv
+*.db
+app/config/secure.py
