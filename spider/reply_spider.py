@@ -2,7 +2,7 @@ from spider import utils
 from throttle import Throttle
 
 
-class ReplyCrawler:
+class ReplySpider:
 
     def __init__(self, type_id, oid):
         self.type_id = type_id

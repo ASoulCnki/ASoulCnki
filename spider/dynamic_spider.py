@@ -1,7 +1,7 @@
 from spider import utils
 
 
-class DynamicCrawler:
+class DynamicSpider:
 
     # def __init__(self, member_ids, meta_storage):
     #     self.member_ids = member_ids
