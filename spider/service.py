@@ -2,7 +2,7 @@ import time
 
 from dynamic_spider import DynamicSpider
 from reply_spider import ReplySpider
-from throttle import Throttle
+from spider.util.throttle import Throttle
 
 # 可爱的asoul成员们的uid捏
 # asoul_member_ids = [672346917, 672342685, 672353429, 351609538, 672328094]

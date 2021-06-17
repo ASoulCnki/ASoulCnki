@@ -1,5 +1,5 @@
-from spider import utils
-from throttle import Throttle
+from spider.util import utils
+from spider.util.throttle import Throttle
 
 
 class ReplySpider:
