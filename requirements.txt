@@ -1,1 +1,3 @@
 requests==2.25.1
+SQLAlchemy==1.4.18
+mysql-connector=2.2.9

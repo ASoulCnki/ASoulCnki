@@ -3,4 +3,4 @@
 .idea/
 venv
 *.db
-app/config/secure.py
+spider/dao/secure.py
