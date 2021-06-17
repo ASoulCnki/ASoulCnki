@@ -1,11 +1,14 @@
 from spider import utils
+from throttle import Throttle
 
 
 class DynamicSpider:
 
-    # def __init__(self, member_ids, meta_storage):
-    #     self.member_ids = member_ids
-    #     self.meta_storage = meta_storage
+    def __init__(self, throttle: Throttle = None):
+        if throttle is not None:
+            self.throttle = throttle
+        else:
+            self.throttle = Throttle(0.05)
 
     def crawl_all_dynamics(self, member_id):
         result = []
@@ -17,12 +20,12 @@ class DynamicSpider:
                 break
         return result
 
-    @staticmethod
-    def _crawl_dynamic_once(mid, offset):
+    def _crawl_dynamic_once(self, mid, offset):
         print("mid: {} offset: {}".format(mid, offset))
         url = "https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history" \
               "?host_uid={}&offset_dynamic_id={}&platform=web". \
             format(mid, offset)
+        self.throttle.wait_url("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history")
         r = utils.url_get(url=url, mode="json")
 
         if ("code" not in r) or r["code"] != 0:

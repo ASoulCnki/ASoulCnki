@@ -4,12 +4,16 @@ from throttle import Throttle
 
 class ReplySpider:
 
-    def __init__(self, type_id, oid):
+    def __init__(self, type_id, oid, throttle: Throttle = None):
         self.type_id = type_id
         self.oid = oid
         self.next = 0
         self.page_size = 49
         self.finished = False
+        if throttle is not None:
+            self.throttle = throttle
+        else:
+            self.throttle = Throttle(0.05)
 
     def start_crawling_replies(self):
         throttle = Throttle(0.05)
