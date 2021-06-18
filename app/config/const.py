@@ -1,0 +1,3 @@
+STATE_FIELD_NAME = 'state'
+STATE_FIELD_STARTED_VALUE = 'started'
+

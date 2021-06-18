@@ -4,6 +4,7 @@ create table user_dynamic
     dynamic_id int comment '动态唯一id',
     type_id    int comment '动态类型, 用于获取评论',
     oid        int comment '动态对象id，用于获取评论',
+    status     int comment '评论爬取状态，0: 未爬取， 1: 至少爬取完成过一次',
     primary key (dynamic_id)
 ) COMMENT '';
 
