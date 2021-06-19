@@ -1,5 +1,5 @@
-import requests
 from app.utils.throttle import Throttle
+from app.utils.request_util import *
 
 throttle = Throttle(0.05)
 
@@ -12,11 +12,8 @@ def crawl_dynamic_once(mid, offset):
 
     throttle.wait_url(bilibili_dynamic_url)
 
-    r = requests.get(url=url)
-    if r.status_code != 200:
-        raise ValueError("Error response code: {}".format(r.status_code))
+    r = url_get(url=url, mode="json")
 
-    r = r.json()
     if ("code" not in r) or r["code"] != 0:
         raise ValueError("Error response code: {}".format(r["code"]))
 
