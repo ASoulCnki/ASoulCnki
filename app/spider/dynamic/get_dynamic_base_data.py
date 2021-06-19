@@ -1,16 +1,14 @@
 import time
 
 from gevent.pool import Pool
-from gevent import monkey
 
 import app.models as models
 from app.config import sqla
 from app.config.const import *
 from app.spider.dynamic.dynamic_spider import crawl_dynamic_once
 
-monkey.patch_socket()
 
-
+# crawl all dynamic for one user and store them to database
 def create_requests_and_save_data(member_id):
     session = sqla['session']
 
@@ -46,7 +44,7 @@ def task(member_ids, pool_number):
     session = sqla['session']
     state = session.query(models.KvStore).filter(models.KvStore.field_name == 'state').all()
 
-    # see if the database is inited
+    # check if the database is inited, if not, do initialization
     if not len(state):
 
         session.execute("truncate table user_dynamic")
@@ -64,11 +62,12 @@ def task(member_ids, pool_number):
             g_result.append(result)
         pool.join()
 
-        finished = True
+        # check whether all tasks finished correctly
+        all_finished = True
         for r in g_result:
-            finished = r.value & finished
+            all_finished = r.value & all_finished
 
-        if not finished:
+        if not all_finished:
             return
 
         time_end = time.time()
