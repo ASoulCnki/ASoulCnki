@@ -5,7 +5,7 @@ from gevent.pool import Pool
 import app.models as models
 from app.config import sqla
 from app.config.const import *
-from app.spider.dynamic.dynamic_spider import crawl_dynamic_once
+from app.spider.dynamic.dynamic_spider import crawl_dynamic_once, check_dynamic_already_exists
 
 
 # crawl all dynamic for one user and store them to database
@@ -32,6 +32,8 @@ def create_requests_and_save_data(member_id):
         dynamic.type_id = reply_tuple[1]
         dynamic.oid = reply_tuple[2]
         dynamic.status = 0
+        if check_dynamic_already_exists(session, dynamic):
+            continue
         session.add(dynamic)
         session.commit()
 

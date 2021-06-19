@@ -2,7 +2,7 @@ import time
 from gevent.pool import Pool
 from app import models
 from app.config import sqla
-from app.spider.dynamic.dynamic_spider import crawl_dynamic_once
+from app.spider.dynamic.dynamic_spider import crawl_dynamic_once, check_dynamic_already_exists
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 
@@ -14,7 +14,6 @@ def create_request_and_save_data(member_id):
 
     offset = 0
     finished = False
-    dynamic_class = models.UserDynamic
     while not finished:
         try:
             has_more, offset, tuples = crawl_dynamic_once(member_id, offset)
@@ -26,18 +25,13 @@ def create_request_and_save_data(member_id):
                 dynamic.oid = reply_tuple[2]
                 dynamic.status = 0
 
-                try:
-                    session.query(dynamic_class).filter(dynamic_class.dynamic_id == dynamic.dynamic_id).one()
+                if check_dynamic_already_exists(session, dynamic):
                     finished = True
                     break
-                except NoResultFound:
-                    print("add dynamic with id {} to database".format(dynamic.dynamic_id))
+                else:
                     session.add(dynamic)
                     session.commit()
                     pass
-                except MultipleResultsFound:
-                    finished = True
-                    break
         except Exception:
             return False
         if has_more == 0:
