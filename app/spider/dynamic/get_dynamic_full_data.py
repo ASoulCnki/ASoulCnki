@@ -3,7 +3,6 @@ from gevent.pool import Pool
 from app import models
 from app.config import sqla
 from app.spider.dynamic.dynamic_spider import crawl_dynamic_once, check_dynamic_already_exists
-from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 
 def create_request_and_save_data(member_id):
@@ -53,14 +52,12 @@ def task(member_ids, pool_number):
     print("start to crawl user dynamic...")
 
     pool = Pool(pool_number)
-    g_result = []
     for member_id in member_ids:
-        result = pool.spawn(
-            create_request_and_save_data,
-            member_id=member_id,
-        )
-        g_result.append(result)
-    pool.join()
+        create_request_and_save_data(member_id)
+    #     result = pool.spawn(
+    #         member_id=member_id,
+    #     )
+    # pool.join()
 
     time_end = time.time()
     print('task to crawl all user dynamic cost', time_end - time_start, 's')

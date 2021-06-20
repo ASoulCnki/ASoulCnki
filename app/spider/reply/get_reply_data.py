@@ -3,11 +3,12 @@ import time
 from gevent.pool import Pool
 
 from app.config import sqla
-from reply_spider import crawl_reply_once, check_reply_already_exists
+from app.spider.reply.reply_spider import crawl_reply_once, check_reply_already_exists
 import app.models as models
 
 
 def create_request_and_save_data(reply_param_tuple):
+    print(reply_param_tuple)
     session = sqla['session']
     type_id = reply_param_tuple[0]
     oid = reply_param_tuple[1]
@@ -26,10 +27,16 @@ def create_request_and_save_data(reply_param_tuple):
                         session.add(reply)
                         session.commit()
                 else:
-                    finished = True
+                    if already_exists:
+                        finished = True
+                        break
+                    else:
+                        session.add(reply)
+                        session.commit()
             if is_end:
                 break
-        except Exception:
+        except Exception as e:
+            print(e)
             session.rollback()
             return
 
@@ -47,15 +54,13 @@ def create_request_and_save_data(reply_param_tuple):
 def task(tuples, pool_number):
     time_start = time.time()
 
-    pool = Pool(pool_number)
-    g_result = []
+    # pool = Pool(pool_number)
     for reply_param_tuple in tuples:
-        result = pool.spawn(
-            create_request_and_save_data,
-            reply_param_tuple=reply_param_tuple,
-        )
-        g_result.append(result)
-    pool.join()
+        create_request_and_save_data(reply_param_tuple)
+    #     pool.spawn(
+    #         reply_param_tuple=reply_param_tuple,
+    #     )
+    # pool.join()
 
     time_end = time.time()
     print('crawl reply cost', time_end - time_start, 's')

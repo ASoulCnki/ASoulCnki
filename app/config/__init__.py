@@ -3,8 +3,7 @@ from celery import Celery
 from celery.signals import worker_process_init
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.config.secure import BROKER_URL
-from app.config.secure import BACKEND_URL
+from sqlalchemy.orm import scoped_session
 from app.config.secure import SQLALCHEMY_DATABASE_URI
 
 
@@ -14,8 +13,8 @@ def create_new_engine(database_url=SQLALCHEMY_DATABASE_URI):
 
 
 engine = create_new_engine()
-
-Session = sessionmaker(bind=engine)
+session_factory = sessionmaker(bind=engine)
+Session = scoped_session(session_factory)
 session = Session()
 
 '''Why use a dict save engine and session?
