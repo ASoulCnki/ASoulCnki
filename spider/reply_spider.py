@@ -1,3 +1,5 @@
+import json
+
 from spider.util import utils
 from spider.util.throttle import Throttle
 
@@ -45,7 +47,8 @@ class ReplySpider:
                     "ctime": reply["ctime"],
                     "m_name": reply["member"]["uname"],
                     "content": reply["content"]["message"],
-                    "like": reply["like"]
+                    "like_num": reply["like"],
+                    "json_text": json.dumps(data)
                 })
 
             # read cursor data to see weather we need to return
