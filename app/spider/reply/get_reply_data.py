@@ -8,7 +8,6 @@ import app.models as models
 
 
 def create_request_and_save_data(reply_param_tuple):
-    print(reply_param_tuple)
     session = sqla['session']
     type_id = reply_param_tuple[0]
     oid = reply_param_tuple[1]
