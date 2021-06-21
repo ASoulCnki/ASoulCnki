@@ -53,13 +53,13 @@ def create_request_and_save_data(reply_param_tuple):
 def task(tuples, pool_number):
     time_start = time.time()
 
-    # pool = Pool(pool_number)
+    pool = Pool(pool_number)
     for reply_param_tuple in tuples:
-        create_request_and_save_data(reply_param_tuple)
-    #     pool.spawn(
-    #         reply_param_tuple=reply_param_tuple,
-    #     )
-    # pool.join()
+        pool.spawn(
+            create_request_and_save_data,
+            reply_param_tuple=reply_param_tuple,
+        )
+    pool.join()
 
     time_end = time.time()
     print('crawl reply cost', time_end - time_start, 's')

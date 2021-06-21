@@ -5,9 +5,10 @@ from spider.util.throttle import Throttle
 import app.models as models
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
+throttle = Throttle(0.5)
+
 
 def crawl_reply_once(oid, type_id, page_size, next_offset):
-    throttle = Throttle(0.05)
     url = "https://api.bilibili.com/x/v2/reply/main?oid={}&type={}&next={}&mode={}&ps={}" \
         .format(oid, type_id, next_offset, 2, page_size)
     # do throttle control before requesting url
@@ -36,7 +37,7 @@ def crawl_reply_once(oid, type_id, page_size, next_offset):
         reply_entry.m_name = reply["member"]["uname"]
         reply_entry.content = reply["content"]["message"]
         reply_entry.like_num = reply["like"]
-        reply_entry.json_text = json.dumps(reply)
+        reply_entry.json_text = ''
         result.append(reply_entry)
 
     # read cursor data to see weather we need to return

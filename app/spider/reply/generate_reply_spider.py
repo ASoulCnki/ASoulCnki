@@ -9,9 +9,9 @@ def send_reply_spider_task():
     inited_dynamics = session.query(models.UserDynamic).filter(models.UserDynamic.status == 1).all()
     un_inited_dynamics = session.query(models.UserDynamic).filter(models.UserDynamic.status == 0).all()
 
-    batch_size = 1
+    batch_size = 16
     batch_count = 0
-    pool_num = 1
+    pool_num = 4
     batch = []
     for dynamic in inited_dynamics:
         batch_count += 1
