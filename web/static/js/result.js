@@ -67,6 +67,6 @@ var related = new Vue({
   },
 });
 history.pushState(null, null, document.URL);
-window.addEventListener('popstate', function () {
-    window.location="/"
+window.addEventListener("popstate", function () {
+  window.location = "/";
 });

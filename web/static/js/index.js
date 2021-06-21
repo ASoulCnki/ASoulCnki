@@ -1,4 +1,4 @@
-var post_url = "http://127.0.0.1:8000/v1/api/check";
+var post_url="http://127.0.0.1:8000/v1/api/check";
 Date.prototype.format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
@@ -32,7 +32,7 @@ var main_form = new Vue({
     agree_check: true,
     maxlength: 1000,
     button_content: "提交小作文",
-    button_class: "btn btn-info btn-lg",
+    button_class: "submit_btn",
     wait_result: false,
   },
   methods: {
@@ -40,14 +40,14 @@ var main_form = new Vue({
       if (this.agree_check) {
         if (!this.wait_result) {
           this.button_content = "查重中...";
-          this.button_class = "btn btn-info btn-lg disabled";
+          this.button_class = "submit_btn_clicked";
           this.wait_result = true;
           localStorage.setItem("text", this.text);
           axios
             .post(post_url, { text: this.text })
             .then((response) => {
               this.button_content = "提交小作文";
-              this.button_class = "btn btn-info btn-lg";
+              this.button_class = "submit_btn";
               this.wait_result = false;
               if (response.data.code == 0) {
                 //时间设置
