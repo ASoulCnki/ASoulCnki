@@ -6,7 +6,6 @@ import app.models as models
 from app.config import sqla
 from app.config.const import *
 from app.spider.dynamic.dynamic_spider import crawl_dynamic_once, check_dynamic_already_exists
-from app.config import celery_app
 
 
 # crawl all dynamic for one user and store them to database
@@ -55,22 +54,20 @@ def task(member_ids, pool_number):
         time_start = time.time()
         print("start to crawl user dynamic...")
 
-        # pool = Pool(pool_number)
+        pool = Pool(pool_number)
         g_result = []
         for member_id in member_ids:
-            result = create_requests_and_save_data(member_id)
+            result = pool.spawn(
+                create_requests_and_save_data,
+                member_id=member_id,
+            )
             g_result.append(result)
-
-        #     result = pool.spawn(
-        #         member_id=member_id,
-        #     )
-        #     g_result.append(result)
-        # pool.join()
+        pool.join()
 
         # check whether all tasks finished correctly
         all_finished = True
         for r in g_result:
-            all_finished = r & all_finished
+            all_finished = r.value & all_finished
 
         if not all_finished:
             return
