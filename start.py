@@ -11,12 +11,15 @@ def init_dynamic():
 
 
 def init_reply():
-    generate_reply_spider_task.delay()
+    generate_reply_spider_task.delay(True)
 
 
 if __name__ == '__main__':
     if len(sys.argv) >= 1:
-        if sys.argv[1] == 'init':
+        if sys.argv[1] == 'init_reply':
             init_reply()
-        elif sys.argv[1] == 'wait':
+        elif sys.argv[1] == 'init_dynamic':
+            init_dynamic()
+        elif sys.argv[1] == 'register_scheduler':
+            # TODO: register schedulers after init dynamic and reply
             pass

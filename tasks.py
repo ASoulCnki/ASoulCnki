@@ -13,8 +13,8 @@ def get_dynamic_base_data_task(member_ids, pool_num):
 
 
 @celery_app.task
-def generate_reply_spider_task():
-    return reply.generate_reply_spider.task()
+def generate_reply_spider_task(un_inited_only):
+    return reply.generate_reply_spider.task(un_inited_only)
 
 
 @celery_app.task

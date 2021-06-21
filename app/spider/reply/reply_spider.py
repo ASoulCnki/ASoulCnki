@@ -1,9 +1,8 @@
-import json
-
-from spider.util import utils
-from spider.util.throttle import Throttle
 import app.models as models
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+
+from app import utils
+from app.utils import Throttle
 
 throttle = Throttle(0.5)
 
@@ -45,7 +44,7 @@ def crawl_reply_once(oid, type_id, page_size, next_offset):
     new_next_offset = cursor["next"]
     is_end = cursor["is_end"]
 
-    if next_offset == 0 :
+    if next_offset == 0:
         print("oid: {} type id: {} all count: {}".format(oid, type_id, cursor["all_count"]))
 
     return is_end, new_next_offset, result
