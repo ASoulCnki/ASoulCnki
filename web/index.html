@@ -4,15 +4,14 @@
     <title>枝网查重</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="./static/css/main.css" />
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./static/js/vue.js"></script>
+    <script src="./static/js/axios.min.js"></script>
     <script type="text/javascript">
+      //跳转到手机端
       try {
         var urlhash = window.location.hash;
-        if (!urlhash.match("fromapp")) {
-          if (navigator.userAgent.match(/(iPhone|iPod|Android|ios|iPad)/i)) {
-            window.location = "/m_index.html";
-          }
+        if (navigator.userAgent.match(/(iPhone|iPod|Android|ios|iPad)/i)) {
+          window.location = "/m_index.html";
         }
       } catch (err) {}
     </script>
@@ -24,7 +23,7 @@
           <div>
             <div id="pagecontent">
               <div class="content_left">
-                <div action="" id="main_form">
+                <div id="main_form">
                   <div class="form_item form_item_text">
                     <div class="form_label"><i class="red">*</i>小作文</div>
                     <div class="form_upload">
@@ -55,7 +54,7 @@
                       />
                       <span>我已同意</span>
                       <span>
-                        <a href="/" target="_blank" style="color: #4f6ef2"
+                        <a href="/protocal.html" target="_blank" style="color: #4f6ef2"
                           >《枝网查重平台用户协议》</a
                         >
                       </span>
@@ -84,53 +83,13 @@
                       <em>?分钟</em>
                     </p>
                   </div>
-                  <div class="right_bottom">
-                    <p>
+                  <div class="right_bottom" id="asoul_link">
+                    <p v-for="person in person_list">
                       <a
-                        href="https://space.bilibili.com/703007996/"
+                        :href="person.href"
                         style="color: rgb(251, 114, 153)"
                         target="_blank"
-                        >A-SOUL_Official</a
-                      >
-                    </p>
-                    <p>
-                      <a
-                        href="https://space.bilibili.com/672353429/"
-                        style="color: rgb(251, 114, 153)"
-                        target="_blank"
-                        >贝拉kira</a
-                      >
-                    </p>
-                    <p>
-                      <a
-                        href="https://space.bilibili.com/672328094/"
-                        style="color: rgb(251, 114, 153)"
-                        target="_blank"
-                        >嘉然今天吃什么</a
-                      >
-                    </p>
-                    <p>
-                      <a
-                        href="https://space.bilibili.com/672346917/"
-                        style="color: rgb(251, 114, 153)"
-                        target="_blank"
-                        >向晚大魔王</a
-                      >
-                    </p>
-                    <p>
-                      <a
-                        href="https://space.bilibili.com/672342685/"
-                        style="color: rgb(251, 114, 153)"
-                        target="_blank"
-                        >乃琳Queen</a
-                      >
-                    </p>
-                    <p>
-                      <a
-                        href="https://space.bilibili.com/351609538/"
-                        style="color: rgb(251, 114, 153)"
-                        target="_blank"
-                        >珈乐Carol</a
+                        >{{person.name}}</a
                       >
                     </p>
                   </div>
@@ -141,6 +100,10 @@
         </div>
       </div>
     </div>
-    <script src="./static/js/main.js" charset="utf-8" type="text/javascript"></script>
+    <script
+      src="./static/js/index.js"
+      charset="utf-8"
+      type="text/javascript"
+    ></script>
   </body>
 </html>

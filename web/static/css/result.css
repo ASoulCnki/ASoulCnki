@@ -1,0 +1,40 @@
+body {
+  background: #ebebeb;
+}
+#panel {
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+}
+#title {
+  margin-bottom: 20px;
+}
+#title h3 {
+  text-align: center;
+}
+#info_head {
+  margin: 10px;
+  margin-left: 20px;
+}
+.head_li {
+  color: rgb(23, 121, 204);
+}
+.result_title {
+  text-align: center;
+  font-size: medium;
+  font-weight: 1000;
+  color: rgb(23, 121, 204);
+}
+.result_box {
+  width: 80%;
+  margin: auto;
+}
+.result_box_inner {
+  margin: 10px;
+  border-radius: 10px;
+  border: 1px solid #e2e0e0;
+}
+.result_box_inner #src_text {
+  margin: 20px;
+  white-space: pre-wrap;
+}
