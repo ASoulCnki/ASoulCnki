@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>枝网查重</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+      id="viewport"
+      name="viewport"
+    />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div style="margin: 20px"></div>
+    
+    <div style="text-align: center; margin-bottom: 20px">
+      <h1>枝网查重系统</h1>
+    </div>
+    <div id="main_form">
+    <div class="panel panel-default" style="width: 90%; margin: auto">
+      <div class="panel-heading">
+        <h3 class="panel-title">小作文</h3>
+      </div>
+      <div class="panel-body">
+        <textarea
+          class="form-control"
+          rows="10"
+          style="resize: none; font-size: large; margin: auto"
+          v-model="text"
+        ></textarea>
+        <div style="text-align: center; margin-top: 10px">
+          <div class="agree_check" style="margin: auto">
+            <input
+              id="paper_protocol_check"
+              type="checkbox"
+              v-model="agree_check"
+              @click="agree_check_click"
+            />
+            <span>我已同意</span>
+            <span>
+              <a href="/" target="_blank" style="color: #4f6ef2"
+                >《枝网查重平台用户协议》</a
+              >
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 20px">
+      <div style="margin: auto">
+        <div type="button" :class="button_class" @click="button_click">{{button_content}}</div>
+      </div>
+    </div>
+    </div>
+    <div style="margin: 40px"></div>
+    <div class="panel panel-default" style="width: 90%; margin: auto">
+      <div class="panel-heading">
+        <h3 class="panel-title">枝网查重系统介绍</h3>
+      </div>
+      <div class="panel-body">
+        <p><b>比对库范围：</b>b站动态评论区</p>
+        <p><b>检测算法：</b>???</p>
+        <p><b>检测语种：</b>中文、英文、emoji</p>
+        <span><b>预计耗时：</b>?分钟</span>
+      </div>
+    </div>
+    <ul
+      class="list-group"
+      style="width: 90%; margin: auto; margin-top: 20px; text-align: center"
+    >
+      <a
+        class="list-group-item"
+        href="https://space.bilibili.com/703007996/"
+        style="color: rgb(251, 114, 153)"
+        target="_blank"
+        >A-SOUL_Official</a
+      >
+      <a
+        class="list-group-item"
+        href="https://space.bilibili.com/672353429/"
+        style="color: rgb(251, 114, 153)"
+        target="_blank"
+        >贝拉kira</a
+      >
+      <a
+        class="list-group-item"
+        href="https://space.bilibili.com/672328094/"
+        style="color: rgb(251, 114, 153)"
+        target="_blank"
+        >嘉然今天吃什么</a
+      >
+      <a
+        class="list-group-item"
+        href="https://space.bilibili.com/672346917/"
+        style="color: rgb(251, 114, 153)"
+        target="_blank"
+        >向晚大魔王</a
+      >
+      <a
+        class="list-group-item"
+        href="https://space.bilibili.com/672342685/"
+        style="color: rgb(251, 114, 153)"
+        target="_blank"
+        >乃琳Queen</a
+      >
+      <a
+        class="list-group-item"
+        href="https://space.bilibili.com/351609538/"
+        style="color: rgb(251, 114, 153)"
+        target="_blank"
+        >珈乐Carol</a
+      >
+    </ul>
+    <div style="margin-bottom: 20px"></div>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./static/js/m_index.js" charset="utf-8" type="text/javascript"></script>
+  </body>
+</html>
