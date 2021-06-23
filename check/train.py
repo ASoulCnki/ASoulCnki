@@ -38,7 +38,7 @@ def train():
         data = get_data()
         if data==None:
             break
-        save_data(id=data[0],hash=hash(data[1]))
+        save_data(id=data[0],hash=set(hash(data[1]))) # 使用set替换list能大幅度提升查找速度
 
 # test_code
 test_data_list = []
