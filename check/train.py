@@ -54,7 +54,7 @@ test_hash_data = []
 
 
 def load_json_data(file_path):
-    with open(file_path, 'r') as load_f:
+    with open(file_path, 'r', encoding="utf-8") as load_f:
         load_dict = json.load(load_f)
         replies = []
         for reply_dict in load_dict:

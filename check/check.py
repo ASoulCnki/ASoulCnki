@@ -66,7 +66,6 @@ def check_v2(database, text, n):
     find_set = set()
 
     hits = 0
-    hit_threshold = len(text_hash_list) * 0.7
 
     for text_hash in text_hash_list:
         if text_hash in text_hash_dict:
@@ -78,16 +77,16 @@ def check_v2(database, text, n):
             if text_hash not in find_set:
                 find_set.add(text_hash)
                 hits += 1
-                if hits > hit_threshold:
-                    break
 
     sorted_list = sorted(count_dict.items(), key=lambda item: item[1], reverse=True)[:n]
 
     result = []
 
     for item in sorted_list:
-        content = reply_dict[item[0]]
-        similarity = article_compare(text, content)
+        content = reply_dict[item[0]][0]
+        similarity = article_compare(text, content) / len(text)
+        if similarity < 0.3:
+            continue
         result.append((similarity, content, text))
 
     return result
