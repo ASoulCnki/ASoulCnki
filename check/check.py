@@ -40,13 +40,14 @@ def check(text, n):
     database = get_database()
     for article in database:
         for text_hash in text_hash_list:
-            if text_hash in article[1] and text_hash not in find_list:
-                if article[0] not in count_dict:
-                    count_dict[article[0]]=1
-                else:
-                    count_dict[article[0]]+=1
-                count_all+=1
-                find_list.append(text_hash)
+            if text_hash in article[1]:
+                    if article[0] not in count_dict:
+                        count_dict[article[0]]=1
+                    else:
+                        count_dict[article[0]]+=1
+                    if text_hash not in find_list:
+                        count_all+=1
+                        find_list.append(text_hash)
     sorted_list = sorted(count_dict.items(), key=lambda item:item[1], reverse=True)
     rate = count_all/len(text_hash_list)
     return rate, sorted_list[:n]
