@@ -1,10 +1,11 @@
 # mainly copied from https://github.com/billvsme/videoSpider, thanks very much
+from gevent import monkey;monkey.patch_all()
 from celery import Celery
 from celery.signals import worker_process_init
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
-from app.config.secure import SQLALCHEMY_DATABASE_URI
+from spider_app.config.secure import SQLALCHEMY_DATABASE_URI
 
 
 def create_new_engine(database_url=SQLALCHEMY_DATABASE_URI):
@@ -46,4 +47,4 @@ def new_process(**args):
 
 
 celery_app = Celery('tasks')
-celery_app.config_from_object('app.config.secure')
+celery_app.config_from_object('spider_app.config.secure')

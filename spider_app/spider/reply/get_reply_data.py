@@ -2,9 +2,9 @@ import time
 
 from gevent.pool import Pool
 
-from app.config import sqla
-from app.spider.reply.reply_spider import crawl_reply_once, check_reply_already_exists
-import app.models as models
+from spider_app.config import sqla
+from spider_app.spider.reply.reply_spider import crawl_reply_once, check_reply_already_exists
+import spider_app.models as models
 
 
 def create_request_and_save_data(reply_param_tuple):

@@ -1,5 +1,5 @@
-from app.config import celery_app
-from app.spider import dynamic, reply
+from spider_app.config import celery_app
+from spider_app.spider import dynamic, reply
 
 
 @celery_app.task

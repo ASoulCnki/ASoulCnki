@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
 
-@app.route("/v1/api/check", methods=["GET", "POST"])
+@app.route("/v1/api/duplication_check", methods=["GET", "POST"])
 def test():
     time.sleep(3)
     data = {

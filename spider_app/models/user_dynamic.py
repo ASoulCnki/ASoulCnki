@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, BIGINT
 
-from app.models.base import Base
+from spider_app.models.base import Base
 
 
 class UserDynamic(Base):

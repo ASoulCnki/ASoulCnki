@@ -2,10 +2,10 @@ import time
 
 from gevent.pool import Pool
 
-import app.models as models
-from app.config import sqla
-from app.config.const import *
-from app.spider.dynamic.dynamic_spider import crawl_dynamic_once, check_dynamic_already_exists
+import spider_app.models as models
+from spider_app.config import sqla
+from spider_app.config.const import *
+from spider_app.spider.dynamic.dynamic_spider import crawl_dynamic_once, check_dynamic_already_exists
 
 
 # crawl all dynamic for one user and store them to database
@@ -46,7 +46,7 @@ def task(member_ids, pool_number):
     session = sqla['session']
     state = session.query(models.KvStore).filter(models.KvStore.field_name == 'state').all()
 
-    # check if the database is inited, if not, do initialization
+    # duplication_check if the database is inited, if not, do initialization
     if not len(state):
 
         session.execute("truncate table user_dynamic")
@@ -64,7 +64,7 @@ def task(member_ids, pool_number):
             g_result.append(result)
         pool.join()
 
-        # check whether all tasks finished correctly
+        # duplication_check whether all tasks finished correctly
         all_finished = True
         for r in g_result:
             all_finished = r.value & all_finished

@@ -1,6 +1,6 @@
-from app import models
-from app.utils.throttle import Throttle
-from app.utils.request_util import *
+from spider_app import models
+from spider_app.utils.throttle import Throttle
+from spider_app.utils.request_util import *
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy import or_
 

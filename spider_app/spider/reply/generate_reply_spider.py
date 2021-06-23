@@ -1,5 +1,6 @@
-from app.config import sqla
-import app.models as models
+from gevent import monkey;monkey.patch_all()
+from spider_app.config import sqla
+import spider_app.models as models
 import tasks
 
 
@@ -9,7 +10,7 @@ def send_reply_spider_task(un_inited_only):
     pool_num = 4
     if not un_inited_only:
         inited_dynamics = session.query(models.UserDynamic).filter(models.UserDynamic.status == 1).all()
-        batch_size = 16
+        batch_size = 4
         batch_count = 0
         batch = []
         for dynamic in inited_dynamics:
@@ -33,7 +34,7 @@ def task(un_inited_only):
     session = sqla['session']
     state = session.query(models.KvStore).filter(models.KvStore.field_name == 'state').all()
 
-    # check if the database is inited, if not, do initialization
+    # duplication_check if the database is inited, if not, do initialization
     if not len(state):
         return
 

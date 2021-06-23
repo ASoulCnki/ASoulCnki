@@ -1,8 +1,8 @@
 import time
 from gevent.pool import Pool
-from app import models
-from app.config import sqla
-from app.spider.dynamic.dynamic_spider import crawl_dynamic_once, check_dynamic_already_exists
+from spider_app import models
+from spider_app.config import sqla
+from spider_app.spider.dynamic.dynamic_spider import crawl_dynamic_once, check_dynamic_already_exists
 
 
 def create_request_and_save_data(member_id):
