@@ -1,12 +1,14 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 Filename         :train.py
 Description      :获取小作文摘要
 Time             :2021/06/22 15:21:08
 Author           :hwa
 Version          :1.0
-'''
+"""
 from hash import hash
+
+
 def get_data():
     """
     TODO:整合数据库
@@ -21,28 +23,33 @@ def get_data():
     else:
         return None
 
-def save_data(id, hash):
+
+def save_data(rpid, hash_val):
     """
     TODO:整合数据库
     @description  :
     抽象出的存储小作文摘要的接口
     @param  :
     id: 小作文的唯一id
-    hash: 小作文的摘要
+    hash_val: 小作文的摘要
     @Returns  :
     """
-    test_hash_data.append((id, hash))
+    test_hash_data.append((rpid, hash_val))
+
 
 def train():
     while True:
         data = get_data()
-        if data==None:
+        if data is None:
             break
-        save_data(id=data[0],hash=set(hash(data[1]))) # 使用set替换list能大幅度提升查找速度
+        save_data(rpid=data[0], hash_val=set(hash(data[1])))  # 使用set替换list能大幅度提升查找速度
+
 
 # test_code
 test_data_list = []
 test_hash_data = []
+
+
 def test():
     import os
     import pickle
@@ -52,9 +59,11 @@ def test():
             path = os.path.join(root, file)
             with open(path, "r", encoding="utf-8") as f:
                 text = f.read()
-                test_data_list.append((path,text))
+                test_data_list.append((path, text))
     train()
-    with open("database.dat","wb") as f:
+    with open("database.dat", "wb") as f:
         pickle.dump(test_hash_data, f)
-if __name__=="__main__":
+
+
+if __name__ == "__main__":
     test()

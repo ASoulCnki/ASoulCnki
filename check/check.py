@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
-'''
+"""
 Filename         :check.py
 Description      :查重算法实现
 Time             :2021/06/22 15:52:02
 Author           :hwa
 Version          :1.0
-'''
-from typing import Counter
+"""
 from hash import hash
+
 
 def get_database():
     """
@@ -19,9 +19,10 @@ def get_database():
     摘要数据列表[("唯一id",[摘要]),...]
     """
     import pickle
-    with open("database.dat","rb") as f:
+    with open("database.dat", "rb") as f:
         hash_data = pickle.load(f)
     return hash_data
+
 
 def check(text, n):
     """
@@ -41,16 +42,18 @@ def check(text, n):
     for article in database:
         for text_hash in text_hash_list:
             if text_hash in article[1]:
-                    if article[0] not in count_dict:
-                        count_dict[article[0]]=1
-                    else:
-                        count_dict[article[0]]+=1
-                    if text_hash not in find_list:
-                        count_all+=1
-                        find_list.append(text_hash)
-    sorted_list = sorted(count_dict.items(), key=lambda item:item[1], reverse=True)
-    rate = count_all/len(text_hash_list)
+                if article[0] not in count_dict:
+                    count_dict[article[0]] = 1
+                else:
+                    count_dict[article[0]] += 1
+                if text_hash not in find_list:
+                    count_all += 1
+                    find_list.append(text_hash)
+    sorted_list = sorted(count_dict.items(), key=lambda item: item[1], reverse=True)
+    rate = count_all / len(text_hash_list)
     return rate, sorted_list[:n]
+
+
 def test():
     text = """大家好，我是bilibili用户。
 十分感谢大家一直以来的支持。
@@ -61,5 +64,6 @@ def test():
     """
     print(check(text, 5))
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     test()
