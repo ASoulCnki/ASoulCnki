@@ -6,6 +6,9 @@ Time             :2021/06/22 15:21:08
 Author           :hwa
 Version          :1.0
 """
+import json
+import time
+
 from hash import hash
 
 
@@ -50,6 +53,38 @@ test_data_list = []
 test_hash_data = []
 
 
+def load_json_data(file_path):
+    with open(file_path, 'r') as load_f:
+        load_dict = json.load(load_f)
+        replies = []
+        for reply_dict in load_dict:
+            replies.append((reply_dict["rpid"], reply_dict["content"], reply_dict["ctime"]))
+        return replies
+
+
+def train_v2(replies):
+    import pickle
+    text_hash_dict = {}
+    reply_dict = {}
+
+    for reply in replies:
+        # this part can be replaced by database
+        reply_dict[reply[0]] = (reply[1], reply[2])
+
+        text_hash_list = hash(reply[1])
+        for text_hash in text_hash_list:
+            if text_hash not in text_hash_dict:
+                text_hash_dict[text_hash] = []
+            text_hash_dict[text_hash].append(reply[0])
+
+    data_store = {
+        "hash_dict": text_hash_dict,
+        "reply_dict": reply_dict
+    }
+    with open("database.dat", "wb") as f:
+        pickle.dump(data_store, f)
+
+
 def test():
     import os
     import pickle
@@ -66,4 +101,8 @@ def test():
 
 
 if __name__ == "__main__":
-    test()
+    start_time = time.time()
+    result = load_json_data("./data/bilibili_cnki_reply.json")
+    train_v2(result)
+    end_time = time.time()
+    print("train cost {} s".format(end_time - start_time))

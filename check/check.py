@@ -6,6 +6,9 @@ Time             :2021/06/22 15:52:02
 Author           :hwa
 Version          :1.0
 """
+import time
+
+from compare import article_compare
 from hash import hash
 
 
@@ -54,6 +57,71 @@ def check(text, n):
     return rate, sorted_list[:n]
 
 
+def check_v2(database, text, n):
+    text_hash_dict = database["hash_dict"]
+    reply_dict = database["reply_dict"]
+
+    text_hash_list = hash(text)
+    count_dict = {}
+    find_set = set()
+
+    hits = 0
+    hit_threshold = len(text_hash_list) * 0.7
+
+    for text_hash in text_hash_list:
+        if text_hash in text_hash_dict:
+            for item in text_hash_dict[text_hash]:
+                if item not in count_dict:
+                    count_dict[item] = 1
+                else:
+                    count_dict[item] += 1
+            if text_hash not in find_set:
+                find_set.add(text_hash)
+                hits += 1
+                if hits > hit_threshold:
+                    break
+
+    sorted_list = sorted(count_dict.items(), key=lambda item: item[1], reverse=True)[:n]
+
+    result = []
+
+    for item in sorted_list:
+        content = reply_dict[item[0]]
+        similarity = article_compare(text, content)
+        result.append((similarity, content, text))
+
+    return result
+
+
+def test_v2():
+    start_time = time.time()
+    database = get_database()
+    cost = time.time() - start_time
+    print("load database cost {} s".format(cost))
+
+    start_time = time.time()
+    count = 0
+    max_query = 100
+    final_result = []
+    for reply in database["reply_dict"].values():
+        text = reply[0]
+        if len(text) < 300:
+            continue
+
+        count += 1
+        if count == max_query:
+            break
+        final_result.append(check_v2(database, text, 5))
+    cost = time.time() - start_time
+    print("query {} records , total cost {} s, in average {} s ".format(max_query, cost, cost / max_query))
+    for result in final_result:
+        if result is None or len(result) == 0:
+            continue
+        print("text: {}".format(result[0][2]))
+        for t in result:
+            print("similarity: {}, content {}".format(t[0], t[1]))
+
+
 def test():
     text = """大家好，我是bilibili用户。
 十分感谢大家一直以来的支持。
@@ -66,4 +134,16 @@ def test():
 
 
 if __name__ == "__main__":
-    test()
+    # test()
+    test_v2()
+#     text = """亵渎乃琳的人有难了，因为乃琳的国将对他紧闭！
+# 计量乃琳的人有难了，因为他也必在永火之中被计量！
+# 为至高者排序的人有难了，因为怜悯在不敬者的头上是黯淡的，乃琳也必将其排在忠诚的粉丝之后！
+# 我见兽从雪山中来，有二角一尾，在角上戴着十个冠冕，头上有亵渎的名号。造谣的人都跟从那兽，又拜它作皇，因为有权柄赐他，可以说造谣淫秽话的口，兽就开口亵渎乃琳的名并牠的帐幕。牠必折磨至高者的粉丝，逼迫他们背反乃琳的诫命。牠必在众人前行异事，好夸大她的微小，以迷惑5ch和V8的蒙昧者追随牠，将牠捧到高云之上，称作人之国的王。牠又召集众人，不论贫富老幼，刻下兽的印记，并赐给权柄，与牠一并说淫秽的话，亵渎乃琳所称的义，贬损她的名。凡有智慧的，可以计算兽印的轮廓。因为那是众人的数目，它的形状是?。
+# 他领受了权柄可肆意妄行二十四个月，但在期满后我又见一位天使站在海上手持锁链将兽擒拿，让她从天上坠落，而那些被兽迷惑领受了印的，行奇事的，将乃琳排在兽后的也同被擒拿，他们被投入v8的粪坑中，天狗饱食了他们的肉。
+#         """
+#     database = get_database()
+#     print()
+#     r = check_v2(database, text, 5)
+#     for t in r:
+#         print("similarity: {}, content {}".format(t[0], t[1]))

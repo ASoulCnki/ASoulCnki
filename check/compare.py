@@ -16,8 +16,8 @@ def article_compare(article1, article2):
     count = 0
     for index, c in enumerate(article1):
         if index in red_list:
-            print("\033[31m" + c + "\033[0m", end="")
+            # print("\033[31m" + c + "\033[0m", end="")
             count += 1
-        else:
-            print(c, end="")
+        # else:
+        #     print(c, end="")
     return count
