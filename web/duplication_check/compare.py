@@ -19,5 +19,5 @@ def article_compare(article1, article2):
             # print("\033[31m" + c + "\033[0m", end="")
             count += 1
         # else:
-        #     print(c, end="")
+            # print(c, end="")
     return count

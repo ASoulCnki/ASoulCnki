@@ -76,7 +76,7 @@ def train_v2(replies):
             if text_hash not in text_hash_dict:
                 text_hash_dict[text_hash] = []
             text_hash_dict[text_hash].append(reply[0])
-
+    print(text_hash_dict)
     data_store = {
         "hash_dict": text_hash_dict,
         "reply_dict": reply_dict

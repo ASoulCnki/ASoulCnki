@@ -1,4 +1,4 @@
-var post_url="http://127.0.0.1:8000/v1/api/check";
+var post_url="/v1/api/check";
 Date.prototype.format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
@@ -68,7 +68,7 @@ var main_form = new Vue({
                   JSON.stringify(response.data.data.related)
                 );
                 //跳转
-                window.location.href = "/result.html";
+                window.location.href = "/result";
               }
             })
             .catch(function (error) {
