@@ -11,5 +11,5 @@ Version          :1.0
 from distutils.core import setup
 from Cython.Build import cythonize
 
-setup(name='check',
-      ext_modules=cythonize("check.py"))
+setup(name='duplication_check',
+      ext_modules=cythonize("duplication_check.py"))

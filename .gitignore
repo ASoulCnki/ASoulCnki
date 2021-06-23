@@ -4,5 +4,5 @@
 venv
 *.db
 spider/dao/secure.py
-app/config/secure.py
+spider_app/config/secure.py
 /data/

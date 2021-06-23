@@ -1,8 +1,8 @@
-import app.models as models
+import spider_app.models as models
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
-from app import utils
-from app.utils import Throttle
+from spider_app import utils
+from spider_app.utils import Throttle
 
 throttle = Throttle(0.5)
 

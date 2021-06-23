@@ -1,6 +1,6 @@
 from sqlalchemy import Column, TEXT, String, BIGINT, Integer
 
-from app.models.base import Base
+from spider_app.models.base import Base
 
 
 class Reply(Base):
