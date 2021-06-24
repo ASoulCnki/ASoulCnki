@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <title>枝网查重</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="static/css/main.css" />
+    <script src="static/js/vue.js"></script>
+    <script src="static/js/axios.min.js"></script>
+    <script type="text/javascript">
+      //跳转到手机端
+      try {
+        var urlhash = window.location.hash;
+        if (navigator.userAgent.match(/(iPhone|iPod|Android|ios|iPad)/i)) {
+          window.location = "/m_index";
+        }
+      } catch (err) {}
+    </script>
+  </head>
+  <body>
+    <div>
+      <div>
+        <div id="body_content">
+          <div>
+            <div id="pagecontent">
+              <div class="content_left">
+                <div id="main_form">
+                  <div class="form_item form_item_text">
+                    <div class="form_label"><i class="red">*</i>小作文</div>
+                    <div class="form_upload">
+                      <div class="form_paste_wrapper" style="display: block">
+                        <textarea
+                          name="paper_text1"
+                          placeholder="内容字数不多于1000字。输入信息后，点击下方「提交小作文」进行查重 !"
+                          :maxlength="maxlength"
+                          v-model="text"
+                        ></textarea>
+                        <p>
+                          <span class="form_paste_count"
+                            ><em style="color: rgb(153, 153, 153)"
+                              >{{text.length}}</em
+                            >/{{maxlength}}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="text-align: center">
+                    <div class="agree_check">
+                      <input
+                        id="paper_protocol_check"
+                        type="checkbox"
+                        v-model="agree_check"
+                        @click="agree_check_click"
+                      />
+                      <span>我已同意</span>
+                      <span>
+                        <a href="/protocal" target="_blank" style="color: #4f6ef2"
+                          >《枝网查重平台用户协议》</a
+                        >
+                      </span>
+                    </div>
+                    <span :class="button_class" @click="button_click">
+                      <span>{{button_content}}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="content_right">
+                <div class="content_right_brand">
+                  <div class="right_top">枝网查重系统介绍</div>
+                  <div class="right_mid">
+                    <p>
+                      <b>比对库范围：</b>
+                      <em>b站动态评论区</em>
+                    </p>
+                    <p>
+                      <b>检测算法：</b>
+                      <em>????</em>
+                    </p>
+                    <p><b>检测语种：</b><em>中文、英文、emoji</em></p>
+                    <p>
+                      <b>预计耗时：</b>
+                      <em>?分钟</em>
+                    </p>
+                  </div>
+                  <div class="right_bottom" id="asoul_link">
+                    <p v-for="person in person_list">
+                      <a
+                        :href="person.href"
+                        style="color: rgb(251, 114, 153)"
+                        target="_blank"
+                        >{{person.name}}</a
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="static/js/index.js"
+      charset="utf-8"
+      type="text/javascript"
+    ></script>
+  </body>
+</html>

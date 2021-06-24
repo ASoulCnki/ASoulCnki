@@ -1,5 +1,4 @@
 class Reply:
-    # 表的结构:
     rpid = 0
     type_id = 0
     mid = 0
@@ -8,3 +7,9 @@ class Reply:
     m_name = ""
     content = ""
     like_num = 0
+
+    def keys(self):
+        return ['rpid', 'type_id', 'mid', 'oid', 'ctime', 'm_name', 'content', 'like_num']
+
+    def __getitem__(self, item):
+        return getattr(self, item)

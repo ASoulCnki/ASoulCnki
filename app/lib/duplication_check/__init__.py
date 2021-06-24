@@ -1,5 +1,1 @@
-import sys
-import os
-from .check import get_database
-
-sys.path.append(os.getcwd() + "/check")
+from . import (reply_database, check, train)
