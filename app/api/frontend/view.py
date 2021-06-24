@@ -21,6 +21,6 @@ def route_result():
     return current_app.send_static_file("result.html")
 
 
-@api.route('/protocal', methods=['GET'])
+@api.route('/protocol', methods=['GET'])
 def route_protocal():
-    return current_app.send_static_file("protocal.html")
+    return current_app.send_static_file("protocol.html")
