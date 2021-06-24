@@ -1,4 +1,5 @@
 import sys
+from app.lib.duplication_check.train import train_data
 from tasks import (
     generate_reply_spider_task,
     get_dynamic_base_data_task
@@ -23,3 +24,5 @@ if __name__ == '__main__':
         elif sys.argv[1] == 'register_scheduler':
             # TODO: register schedulers after init dynamic and reply
             pass
+        elif sys.argv[1] == 'train':
+            train_data()
