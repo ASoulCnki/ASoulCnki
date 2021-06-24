@@ -1,10 +1,11 @@
 import time
 
 from flask import request, jsonify
-
-from app.config import reply_db
+from app.lib.duplication_check.check import get_database
 from app.lib.duplication_check.check import check
 from app.lib.red_print import RedPrint
+
+reply_db = get_database()
 
 api = RedPrint('check')
 

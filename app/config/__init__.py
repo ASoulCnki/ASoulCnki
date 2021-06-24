@@ -7,7 +7,6 @@ from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 
 from app.config.secure import SQLALCHEMY_DATABASE_URI
-from app.lib.duplication_check.check import get_database
 
 
 def create_new_engine(database_url=SQLALCHEMY_DATABASE_URI):
@@ -30,8 +29,6 @@ sqla = {
     'engine': engine,
     'session': session
 }
-
-reply_db = get_database()
 
 
 def create_new_sqla(database_url=SQLALCHEMY_DATABASE_URI):

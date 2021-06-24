@@ -14,7 +14,7 @@ def send_reply_spider_task(un_inited_only):
         batch = []
         for dynamic in inited_dynamics:
             batch_count += 1
-            batch.append((dynamic.type_id, dynamic.oid, dynamic.status))
+            batch.append((dynamic.type_id, dynamic.oid, dynamic.status, dynamic.dynamic_id))
             if batch_count == batch_size:
                 tasks.get_reply_data_task.delay(batch, pool_num)
                 batch = []
@@ -25,7 +25,7 @@ def send_reply_spider_task(un_inited_only):
 
     un_inited_dynamics = session.query(models.UserDynamic).filter(models.UserDynamic.status == 0).all()
     for dynamic in un_inited_dynamics:
-        param_tuple = (dynamic.type_id, dynamic.oid, dynamic.status)
+        param_tuple = (dynamic.type_id, dynamic.oid, dynamic.status, dynamic.dynamic_id)
         tasks.get_reply_data_task.delay([param_tuple], pool_num)
 
 

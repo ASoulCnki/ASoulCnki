@@ -8,6 +8,7 @@ class Reply(Base):
     __tablename__ = 'reply'
     # 表的结构:
     rpid = Column(BIGINT, primary_key=True)
+    dynamic_id = Column(BIGINT, primary_key=True)
     type_id = Column(Integer)
     mid = Column(Integer)
     oid = Column(BIGINT)
@@ -15,9 +16,3 @@ class Reply(Base):
     m_name = Column(String(255))
     content = Column(TEXT)
     like_num = Column(Integer)
-
-    def keys(self):
-        return ['rpid', 'type_id', 'mid', 'oid', 'ctime', 'm_name', 'content', 'like_num']
-
-    def __getitem__(self, item):
-        return getattr(self, item)

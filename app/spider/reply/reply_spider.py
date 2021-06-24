@@ -4,10 +4,10 @@ from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from app import utils
 from app.utils import Throttle
 
-throttle = Throttle(0.5)
+throttle = Throttle(1)
 
 
-def crawl_reply_once(oid, type_id, page_size, next_offset):
+def crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset):
     url = "https://api.bilibili.com/x/v2/reply/main?oid={}&type={}&next={}&mode={}&ps={}" \
         .format(oid, type_id, next_offset, 2, page_size)
     # do throttle control before requesting url
@@ -36,7 +36,7 @@ def crawl_reply_once(oid, type_id, page_size, next_offset):
         reply_entry.m_name = reply["member"]["uname"]
         reply_entry.content = reply["content"]["message"]
         reply_entry.like_num = reply["like"]
-        reply_entry.json_text = ''
+        reply_entry.dynamic_id = dynamic_id
         result.append(reply_entry)
 
     # read cursor data to see weather we need to return

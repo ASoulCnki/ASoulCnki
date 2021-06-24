@@ -13,13 +13,14 @@ def create_request_and_save_data(reply_param_tuple):
     type_id = reply_param_tuple[0]
     oid = reply_param_tuple[1]
     status = reply_param_tuple[2]
+    dynamic_id = reply_param_tuple[2]
 
     page_size = 49
     next_offset = 0
     finished = False
     while not finished:
         try:
-            is_end, next_offset, result = crawl_reply_once(oid, type_id, page_size, next_offset)
+            is_end, next_offset, result = crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset)
             for reply in result:
                 already_exists = check_reply_already_exists(session, reply)
                 if status == 0:

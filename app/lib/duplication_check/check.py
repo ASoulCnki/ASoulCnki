@@ -11,6 +11,7 @@ import time
 from app.lib.duplication_check.compare import article_compare
 from app.lib.duplication_check.hash import hash
 from app.lib.duplication_check.reply_database import ReplyDatabase
+from app.lib.duplication_check.reply_model import Reply
 
 
 def get_database():
@@ -22,6 +23,7 @@ def get_database():
     @Returns  :
     摘要数据列表[("唯一id",[摘要]),...]
     """
+    import os
     return ReplyDatabase.load_from_image("database.dat")
 
 
@@ -56,9 +58,21 @@ def check(database: ReplyDatabase, text, n):
         if similarity < 0.3:
             continue
         all_content += content
-        result.append((similarity, reply))
+        result.append((similarity, reply, get_reply_url(reply)))
     all_similarity = article_compare(text, all_content) / len(text)
     return result, text, all_similarity
+
+
+def get_reply_url(reply: Reply):
+    base_url = "https://www.bilibili.com"
+    dynamic_base_url = "https://t.bilibili.com"
+    if reply.type_id == 1:
+        return "{}/video/av{}/#reply{}".format(base_url, reply.oid, reply.rpid)
+    elif reply.type_id == 17:
+        return "{}/{}/#reply{}".format(dynamic_base_url, reply.oid, reply.rpid)
+    # TODO: get dynamic id for type 11
+    # elif reply.type_id == 11 or reply.type_id == 17:
+    #     return "{}/{}/#reply{}".format(dynamic_base_url, reply.oid, reply.rpid)
 
 
 def test():

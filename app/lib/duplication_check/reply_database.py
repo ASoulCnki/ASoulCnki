@@ -22,10 +22,13 @@ class ReplyDatabase:
             return db
 
     @staticmethod
-    def load_from_image(path):
-        with open(path, "rb") as f:
-            hash_data = pickle.load(f)
-        return hash_data
+    def load_from_image(path) -> Optional[Any]:
+        try:
+            with open(path, "rb") as f:
+                hash_data = pickle.load(f)
+            return hash_data
+        except Exception:
+            return None
 
     def dump_to_image(self, path):
         with open(path, "wb") as f:
