@@ -13,7 +13,7 @@ def create_request_and_save_data(reply_param_tuple):
     type_id = reply_param_tuple[0]
     oid = reply_param_tuple[1]
     status = reply_param_tuple[2]
-    dynamic_id = reply_param_tuple[2]
+    dynamic_id = reply_param_tuple[3]
 
     page_size = 49
     next_offset = 0
