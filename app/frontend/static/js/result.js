@@ -118,6 +118,9 @@ var clipboard = new ClipboardJS("#copy_result_btn", {
         "\n" +
         "作者:" +
         related_list[0][1].m_name +
+        "\n" +
+        "发表时间:" +
+        related.time_format(related_list[0][1].ctime) +
         "\n";
     }
     //评价
