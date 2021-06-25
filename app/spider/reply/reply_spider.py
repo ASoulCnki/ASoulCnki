@@ -4,7 +4,7 @@ from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from app import utils
 from app.utils import Throttle
 
-throttle = Throttle(1)
+throttle = Throttle(1.2)
 
 
 def crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset):

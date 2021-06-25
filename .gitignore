@@ -6,3 +6,6 @@ venv
 spider/dao/secure.py
 app/config/secure.py
 /data/
+/stop.text
+/database.dat
+/celerybeat-schedule
