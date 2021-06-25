@@ -37,6 +37,10 @@ var main_form = new Vue({
   },
   methods: {
     button_click() {
+      if (this.text.length < 10) {
+        alert("小作文字数太少了哦~");
+        return;
+      }
       if (this.agree_check) {
         if (!this.wait_result) {
           this.button_content = "查重中...";
@@ -76,7 +80,8 @@ var main_form = new Vue({
               console.log(error);
             });
         }
-      } else {
+      }
+      else {
         alert("您未同意《枝网查重平台用户协议》");
       }
     },

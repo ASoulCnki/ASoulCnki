@@ -23,14 +23,21 @@
           <h3 class="panel-title">小作文</h3>
         </div>
         <div class="panel-body">
-          <textarea class="form-control" rows="10" v-model="text"></textarea>
+          <textarea
+            class="form-control"
+            rows="10"
+            placeholder="内容字数不少于10个字，不多于1000字。输入信息后，点击下方「提交小作文」进行查重 !"
+            v-model="text"
+          ></textarea>
           <div id="agree_check">
             <input
               type="checkbox"
               v-model="agree_check"
               @click="agree_check_click"
             />
-            我已同意<a href="/protocol" target="_blank">《枝网查重平台用户协议》</a>
+            我已同意<a href="/protocol" target="_blank"
+              >《枝网查重平台用户协议》</a
+            >
           </div>
         </div>
       </div>
@@ -50,10 +57,13 @@
         <h3 class="panel-title">枝网查重系统介绍</h3>
       </div>
       <div class="panel-body">
-        <p><b>比对库范围：</b>b站动态评论区</p>
-        <p><b>检测算法：</b>???</p>
-        <p><b>检测语种：</b>中文、英文、emoji</p>
-        <span><b>预计耗时：</b>?分钟</span>
+        <p><b>比对库范围：</b><br />b站动态、视频评论区</p>
+        <p>
+          <b>检测算法：</b><br />
+          [1]李旭.基于串匹配方法的文档复制检测系统研究[D]. 燕山大学.
+        </p>
+        <p><b>检测语种：</b><br />中文、英文、emoji</p>
+        <span><b>预计耗时：</b><br />1秒</span>
       </div>
     </div>
     <ul class="list-group" id="asoul_link">

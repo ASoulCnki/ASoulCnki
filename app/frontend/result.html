@@ -64,17 +64,24 @@
                       <div class="col-md-6">
                         <p style="margin: 0px">
                           <span style="color: rgb(23, 121, 204)">作者：</span
-                          >{{essay.author}}
+                          >{{essay[1].m_name}}
+                        </p>
+                        <p style="margin: 0px">
+                          <span style="color: rgb(23, 121, 204)">发表时间：</span
+                          >{{time_format(essay[1].ctime)}}
                         </p>
                         <p style="margin: 0px">
                           <span style="color: rgb(23, 121, 204)">相似率：</span
-                          >{{essay.rate*100 | rounding}}%
+                          >{{essay[0]*100 | rounding}}%
+                        </p>
+                        <p>
+                          <a :href="essay[2]" target="_blank">查看原文</a>
                         </p>
                       </div>
                       <div class="col-md-6">
                         <p style="margin: 0px">
                           <span style="white-space: pre-wrap"
-                            >{{essay.text}}</span
+                            >{{essay[1].content}}</span
                           >
                         </p>
                       </div>
