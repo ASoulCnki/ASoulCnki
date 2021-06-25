@@ -91,14 +91,59 @@ var related = new Vue({
       return value.toFixed(2);
     },
   },
-  methods:{
-    time_format(time){
+  methods: {
+    time_format(time) {
       var now = new Date();
-      var time_num = parseInt(time) * 1000
+      var time_num = parseInt(time) * 1000;
       now.setTime(time_num);
-      return now.format("yyyy-MM-dd hh:mm:ss")
+      return now.format("yyyy-MM-dd hh:mm:ss");
+    },
+  },
+});
+
+var clipboard = new ClipboardJS("#copy_result_btn", {
+  text: function (trigger) {
+    //标题
+    var data_copyright = "枝网文本复制检测报告(简洁)\n";
+    var data_time = "查重时间:" + info_head.time + "\n";
+    //复制比
+    var rate = info_head.rate;
+    var data_rate = "总文字复制比:" + rate + "%\n";
+    var related_list = JSON.parse(localStorage.getItem("related"));
+    var data_related = "";
+    if (related_list.length > 0) {
+      data_related =
+        "相似小作文:\n" +
+        related_list[0][2] +
+        "\n" +
+        "作者:" +
+        related_list[0][1].m_name +
+        "\n" +
+        "发表时间:" +
+        related.time_format(related_list[0][1].ctime) +
+        "\n";
     }
-  }
+    //评价
+    var comment = "我的评价是:";
+    if (rate < 40.0) {
+      comment += "原创/偷🥰\n";
+    } else if (rate < 70.0) {
+      comment += "有抄袭嫌疑🤨\n";
+    } else {
+      comment += "一眼偷🥵\n";
+    }
+    var copy_data =
+      data_copyright + data_time + data_rate + data_related + comment;
+    return copy_data;
+  },
+});
+clipboard.on("success", function (e) {
+  console.log(e);
+  alert("复制成功");
+});
+clipboard.on("error", function (e) {
+  console.log(e);
+  alert("复制失败，请手动复制");
 });
 history.pushState(null, null, document.URL);
 window.addEventListener("popstate", function () {

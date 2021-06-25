@@ -4,12 +4,10 @@
     <title>枝网检测报告</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="static/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link href="/static/css/result.css" rel="stylesheet" />
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="static/css/result.css" rel="stylesheet" />
     <script src="static/js/vue.js"></script>
+    <script src="static/js/clipboard.min.js"></script>
   </head>
   <body>
     <div class="panel panel-default" id="panel">
@@ -48,6 +46,11 @@
           </div>
         </div>
         <div class="result_body">
+          <div id="copy_result">
+            <button type="button" class="btn btn-info" id="copy_result_btn">
+              复制查重结果
+            </button>
+          </div>
           <p class="result_title">原文</p>
           <div class="result_box">
             <div class="result_box_inner">
@@ -67,7 +70,8 @@
                           >{{essay[1].m_name}}
                         </p>
                         <p style="margin: 0px">
-                          <span style="color: rgb(23, 121, 204)">发表时间：</span
+                          <span style="color: rgb(23, 121, 204)"
+                            >发表时间：</span
                           >{{time_format(essay[1].ctime)}}
                         </p>
                         <p style="margin: 0px">
