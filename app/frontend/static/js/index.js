@@ -1,4 +1,4 @@
-var post_url="/v1/check";
+var post_url="/v1/api/check";
 Date.prototype.format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
