@@ -1,4 +1,4 @@
-var post_url="/v1/api/check";
+var post_url = "/v1/api/check";
 Date.prototype.format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
@@ -38,7 +38,7 @@ var main_form = new Vue({
   methods: {
     button_click() {
       if (this.agree_check) {
-        if (!this.wait_result) {
+        if (!this.wait_result && this.text.length >= 10) {
           this.button_content = "查重中...";
           this.button_class = "submit_btn_clicked";
           this.wait_result = true;
@@ -76,6 +76,9 @@ var main_form = new Vue({
               console.log(error);
             });
         }
+      }
+      if (this.text.length < 10) {
+        alert("小作文字数太少了哦~");
       } else {
         alert("您未同意《枝网查重平台用户协议》");
       }
