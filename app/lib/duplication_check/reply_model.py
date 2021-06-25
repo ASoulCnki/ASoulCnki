@@ -7,6 +7,7 @@ class Reply:
     m_name = ""
     content = ""
     like_num = 0
+    dynamic_id = 0
 
     def keys(self):
         return ['rpid', 'type_id', 'mid', 'oid', 'ctime', 'm_name', 'content', 'like_num']

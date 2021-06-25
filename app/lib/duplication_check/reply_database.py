@@ -44,6 +44,7 @@ class ReplyDatabase:
         r.type_id = reply["type_id"]
         r.m_name = reply["m_name"]
         r.mid = reply["mid"]
+        r.dynamic_id = reply["dynamic_id"]
         self.reply_dict[reply["rpid"]] = r
 
         text_hash_list = hash(r.content)
