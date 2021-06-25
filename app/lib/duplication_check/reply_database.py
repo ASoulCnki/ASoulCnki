@@ -11,6 +11,8 @@ class ReplyDatabase:
     def __init__(self):
         self.reply_dict = {}
         self.hash_dict = {}
+        self.min_time = (1 << 32) - 1
+        self.max_time = 0
 
     @staticmethod
     def load_from_json(file_path):
@@ -46,6 +48,12 @@ class ReplyDatabase:
         r.mid = reply["mid"]
         r.dynamic_id = reply["dynamic_id"]
         self.reply_dict[reply["rpid"]] = r
+
+        if r.ctime > self.max_time:
+            self.max_time = r.ctime
+
+        if r.ctime < self.min_time:
+            self.min_time = r.ctime
 
         text_hash_list = hash(r.content)
         for text_hash in text_hash_list:

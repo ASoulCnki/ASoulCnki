@@ -31,7 +31,7 @@ def crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset):
         reply_entry.rpid = reply["rpid"]
         reply_entry.type_id = reply["type"]
         reply_entry.mid = reply["mid"]
-        reply_entry.oid = reply["oid"]
+        reply_entry.oid = oid
         reply_entry.ctime = reply["ctime"]
         reply_entry.m_name = reply["member"]["uname"]
         reply_entry.content = reply["content"]["message"]
