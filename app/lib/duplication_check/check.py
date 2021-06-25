@@ -70,6 +70,8 @@ def get_reply_url(reply: Reply):
         return "{}/video/av{}/#reply{}".format(base_url, reply.oid, reply.rpid)
     elif reply.type_id == 17 or reply.type_id == 11:
         return "{}/{}/#reply{}".format(dynamic_base_url, reply.dynamic_id, reply.rpid)
+    elif reply.type_id == 12:
+        return "{}/read/cv{}/#reply{}".format(base_url, reply.oid, reply.rpid)
 
 
 def test():

@@ -1,8 +1,11 @@
 import time
 
+from sqlalchemy import func
+from sqlalchemy.orm.exc import NoResultFound
+
+import app.models as models
 from app.config import sqla
 from app.spider.reply.reply_spider import crawl_reply_once, check_reply_already_exists
-import app.models as models
 
 
 def create_request_and_save_data(reply_param_tuple):
@@ -37,9 +40,8 @@ def create_request_and_save_data(reply_param_tuple):
             if is_end:
                 break
         except Exception as e:
-            print(e)
             session.rollback()
-            return
+            raise e
 
     # modify status
     if status == 0:
@@ -50,6 +52,7 @@ def create_request_and_save_data(reply_param_tuple):
             session.commit()
         except Exception as e:
             session.rollback()
+            raise e
 
 
 def task(tuples, pool_number):

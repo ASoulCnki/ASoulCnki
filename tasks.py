@@ -1,3 +1,6 @@
+import os
+import time
+
 from app.config import celery_app
 from app.spider import dynamic, reply
 
@@ -19,4 +22,20 @@ def generate_reply_spider_task(un_inited_only):
 
 @celery_app.task
 def get_reply_data_task(tuples, pool_num):
-    return reply.get_reply_data.task(tuples, pool_num)
+    try:
+        reply.get_reply_data.task(tuples, pool_num)
+    except Exception as e:
+        print(e)
+        get_reply_data_task(tuples, pool_num).delay()
+        os.system("sh stop.sh")
+
+
+@celery_app.task
+def raise_exception():
+    try:
+        raise ValueError("error")
+    except Exception as e:
+        print(e)
+        raise_exception.delay()
+        time.sleep(1)
+        os.system("sh stop.sh")
