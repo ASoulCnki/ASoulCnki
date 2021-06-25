@@ -38,3 +38,10 @@ body {
   margin: 20px;
   white-space: pre-wrap;
 }
+#copy_result{
+  text-align: center;
+}
+
+#copy_result .btn{
+  margin: 20px;
+}
