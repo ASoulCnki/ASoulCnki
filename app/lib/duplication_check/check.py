@@ -68,11 +68,8 @@ def get_reply_url(reply: Reply):
     dynamic_base_url = "https://t.bilibili.com"
     if reply.type_id == 1:
         return "{}/video/av{}/#reply{}".format(base_url, reply.oid, reply.rpid)
-    elif reply.type_id == 17:
-        return "{}/{}/#reply{}".format(dynamic_base_url, reply.oid, reply.rpid)
-    # TODO: get dynamic id for type 11
-    # elif reply.type_id == 11 or reply.type_id == 17:
-    #     return "{}/{}/#reply{}".format(dynamic_base_url, reply.oid, reply.rpid)
+    elif reply.type_id == 17 or reply.type_id == 11:
+        return "{}/{}/#reply{}".format(dynamic_base_url, reply.dynamic_id, reply.rpid)
 
 
 def test():
