@@ -10,3 +10,4 @@ Flask~=2.0.1
 Flask-Cors==3.0.10
 Werkzeug~=2.0.1
 kombu~=5.1.0
+readerwriterlock==1.0.8

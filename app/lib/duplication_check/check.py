@@ -23,8 +23,11 @@ def get_database():
     @Returns  :
     摘要数据列表[("唯一id",[摘要]),...]
     """
-    import os
-    return ReplyDatabase.load_from_image("database.dat")
+    start_time = time.time()
+    db = ReplyDatabase.load_from_image("database.dat")
+    cost = time.time() - start_time
+    print("load database cost {} s".format(cost))
+    return db
 
 
 def check(database: ReplyDatabase, text, n):
@@ -46,7 +49,7 @@ def check(database: ReplyDatabase, text, n):
                 find_set.add(text_hash)
                 hits += 1
 
-    sorted_list = sorted(count_dict.items(), key=lambda item: item[1], reverse=True)[:n]
+    sorted_list = sorted(count_dict.items(), key=lambda item: item[1], reverse=True)
 
     result = []
     all_content = ""
@@ -59,8 +62,11 @@ def check(database: ReplyDatabase, text, n):
             continue
         all_content += content
         result.append((similarity, reply, get_reply_url(reply)))
+
+    result.sort(key=lambda x: (-x[0], x[1].ctime))
+
     all_similarity = article_compare(text, all_content) / len(text)
-    return result, text, all_similarity
+    return result[:n], text, all_similarity
 
 
 def get_reply_url(reply: Reply):

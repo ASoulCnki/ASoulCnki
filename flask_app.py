@@ -10,8 +10,9 @@ app = create_app()
 
 @app.errorhandler(Exception)
 def framework_error(e):
+    print(e)
+    traceback.print_stack()
     if isinstance(e, APIException):
-        traceback.print_stack()
         return e
     if isinstance(e, HTTPException):
         code = e.code
