@@ -11,23 +11,9 @@ import time
 from app.lib.duplication_check.compare import article_compare
 from app.lib.duplication_check.hash import hash
 from app.lib.duplication_check.reply_database import ReplyDatabase
+from app.lib.duplication_check.reply_database import reply_db_singleton as reply_db
+from app.lib.duplication_check.pull_data import pull_data_from_database
 from app.lib.duplication_check.reply_model import Reply
-
-
-def get_database():
-    """
-    TODO:整合数据库
-    @description  :
-    获取摘要数据库
-    @param  :
-    @Returns  :
-    摘要数据列表[("唯一id",[摘要]),...]
-    """
-    start_time = time.time()
-    db = ReplyDatabase.load_from_image("database.dat")
-    cost = time.time() - start_time
-    print("load database cost {} s".format(cost))
-    return db
 
 
 def check(database: ReplyDatabase, text, n):
@@ -80,15 +66,10 @@ def get_reply_url(reply: Reply):
         return "{}/read/cv{}/#reply{}".format(base_url, reply.oid, reply.rpid)
 
 
-def test():
-    start_time = time.time()
-    database = get_database()
-    cost = time.time() - start_time
-    print("load database cost {} s".format(cost))
-
+def test(database):
     start_time = time.time()
     count = 0
-    max_query = 100
+    max_query = 2
     final_result = []
     for reply in database.reply_dict.values():
         reply_content = reply.content
@@ -111,7 +92,9 @@ def test():
 
 
 if __name__ == "__main__":
-    test()
+    reply_db.reset()
+    pull_data_from_database(reply_db, 1622531728)
+    # test(reply_db)
     # text = """
     #     """
     # db = get_database()

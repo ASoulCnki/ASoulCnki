@@ -1,5 +1,6 @@
 import json
 import pickle
+import time
 from typing import Optional, Any
 from readerwriterlock import rwlock
 
@@ -45,14 +46,17 @@ class ReplyDatabase:
                 db.add_reply_data(r)
             return db
 
-    @staticmethod
-    def load_from_image(path) -> Optional[Any]:
+    def load_from_image(self, path):
         try:
             with open(path, "rb") as f:
-                db = pickle.load(f)
-            return db
+                db: ReplyDatabase = pickle.load(f)
+                self.reply_dict = db.reply_dict
+                self.hash_dict = db.hash_dict
+                self.max_rpid = db.max_rpid
+                self.max_time = db.max_time
+                self.min_time = db.min_time
         except Exception:
-            return ReplyDatabase()
+            pass
 
     def dump_to_image(self, path):
         with self.lock.gen_rlock():
@@ -65,6 +69,7 @@ class ReplyDatabase:
             self.hash_dict = {}
             self.min_time = (1 << 32) - 1
             self.max_time = 0
+            self.max_rpid = 0
 
     def add_reply_data(self, r):
 
@@ -101,3 +106,22 @@ class ReplyDatabase:
                 return self.hash_dict[text_hash]
             else:
                 return None
+
+
+# define the database singleton
+reply_db_singleton = ReplyDatabase()
+
+
+def load_database_singleton_from_image():
+    """
+    @description  :
+    获取摘要数据库
+    @param  :
+    @Returns  :
+    摘要数据列表[("唯一id",[摘要]),...]
+    """
+    print("start to init database singleton")
+    start_time = time.time()
+    reply_db_singleton.load_from_image("database.dat")
+    cost = time.time() - start_time
+    print("load database cost {} s".format(cost))

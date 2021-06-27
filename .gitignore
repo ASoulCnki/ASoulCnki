@@ -9,3 +9,4 @@ app/config/secure.py
 /stop.text
 /database.dat
 /celerybeat-schedule
+/logs

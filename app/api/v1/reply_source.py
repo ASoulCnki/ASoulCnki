@@ -1,19 +1,19 @@
 from flask import jsonify, request
 
-from app.lib.duplication_check.check import get_database
-from app.lib.duplication_check.reply_database import ReplyDatabase
-from app.lib.red_print import RedPrint
-from app.config import sqla
-import app.models as models
+from app.lib.duplication_check.reply_database import reply_db_singleton as reply_db
 from app.lib.error_code import ServerError
+from app.lib.red_print import RedPrint
+from app.lib.duplication_check.pull_data import pull_data_from_database
+from app.config.secure import CONTROL_SECURE_KEY
 
 api = RedPrint('reply_source')
-
-reply_db: ReplyDatabase = get_database()
 
 
 @api.route('/reset', methods=['POST'], strict_slashes=False)
 def reset_reply_database():
+    secure_key = request.json.get("secure_key")
+    if secure_key != CONTROL_SECURE_KEY:
+        raise ServerError()
     reply_db.reset()
     reply_db.dump_to_image("database.dat")
     return_dict = {
@@ -27,16 +27,13 @@ def reset_reply_database():
 
 
 @api.route('/pull', methods=['POST'], strict_slashes=False)
-def reset_reply_source():
-    start_rpid = request.json.get("start_rpid")
-    session = sqla["session"]
+def pull_data_from_data_source():
+    secure_key = request.json.get("secure_key")
+    if secure_key != CONTROL_SECURE_KEY:
+        raise ServerError()
+    start_time = request.json.get("start_time")
     try:
-        result = session.query(models.Reply).filter(models.Reply.rpid > start_rpid).all()
-        if len(result) != 0:
-            with reply_db.lock.gen_wlock():
-                for r in result:
-                    reply_db.add_reply_data(r)
-            reply_db.dump_to_image("database.dat")
+        pull_data_from_database(reply_db, start_time)
         return_dict = {
             "code": 0,
             "message": "",
@@ -45,12 +42,16 @@ def reset_reply_source():
                 "end_time": reply_db.max_time,
             }}
         return jsonify(return_dict)
-    except Exception:
+    except Exception as e:
+        print(e)
         raise ServerError()
 
 
 @api.route('/checkpoint', methods=['POST'], strict_slashes=False)
 def do_checkpoint_for_reply_database():
+    secure_key = request.json.get("secure_key")
+    if secure_key != CONTROL_SECURE_KEY:
+        raise ServerError()
     reply_db.dump_to_image("database.dat")
     return_dict = {
         "code": 0,
