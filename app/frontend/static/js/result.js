@@ -132,8 +132,9 @@ var clipboard = new ClipboardJS("#copy_result_btn", {
     // } else {
     //   comment += "一眼偷🥵\n";
     // }
+    var notice = "\n查重结果仅作参考，请注意辨别是否为原创"
     var copy_data =
-      data_copyright + data_time + data_rate + data_related;
+      data_copyright + data_time + data_rate + data_related + notice;
     return copy_data;
   },
 });
