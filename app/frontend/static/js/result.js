@@ -124,16 +124,16 @@ var clipboard = new ClipboardJS("#copy_result_btn", {
         "\n";
     }
     //评价
-    var comment = "我的评价是:";
-    if (rate < 40.0) {
-      comment += "原创/偷🥰\n";
-    } else if (rate < 70.0) {
-      comment += "有抄袭嫌疑🤨\n";
-    } else {
-      comment += "一眼偷🥵\n";
-    }
+    // var comment = "我的评价是:";
+    // if (rate < 40.0) {
+    //   comment += "原创/偷🥰\n";
+    // } else if (rate < 70.0) {
+    //   comment += "有抄袭嫌疑🤨\n";
+    // } else {
+    //   comment += "一眼偷🥵\n";
+    // }
     var copy_data =
-      data_copyright + data_time + data_rate + data_related + comment;
+      data_copyright + data_time + data_rate + data_related;
     return copy_data;
   },
 });
