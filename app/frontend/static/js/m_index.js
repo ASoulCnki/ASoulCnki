@@ -72,7 +72,7 @@ var main_form = new Vue({
                   JSON.stringify(response.data.data.related)
                 );
                 //跳转
-                window.location.href = "/result";
+                window.location.href = "/result.html";
               }
             })
             .catch(function (error) {
