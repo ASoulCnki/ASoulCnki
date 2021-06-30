@@ -231,12 +231,11 @@ body {
   font-size: 14px;
 }
 .content_right .content_right_brand .right_mid p {
-  line-height: 22px;
-  margin-bottom: 12px;
+  line-height: 20px;
+  margin-bottom: 8px;
   color: #151515;
 }
 .content_right .content_right_brand .right_mid p b {
-  font-family: PingFangSC-Medium;
   color: #000;
 }
 .content_right .content_right_brand .right_bottom {
