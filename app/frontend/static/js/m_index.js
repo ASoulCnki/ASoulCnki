@@ -74,9 +74,16 @@ var main_form = new Vue({
                 //跳转
                 window.location.href = "/result.html";
               }
+              else{
+                alert("服务器返回错误");
+              }
             })
-            .catch(function (error) {
+            .catch(error =>{
               // 请求失败处理
+              this.button_content = "提交小作文";
+              this.button_class = "btn btn-info btn-lg";
+              this.wait_result = false;
+              alert(error);
               console.log(error);
             });
         }
