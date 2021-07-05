@@ -1,8 +1,5 @@
 import time
 
-from sqlalchemy import func
-from sqlalchemy.orm.exc import NoResultFound
-
 import app.models as models
 from app.config import sqla
 from app.spider.reply.reply_spider import crawl_reply_once, check_reply_already_exists

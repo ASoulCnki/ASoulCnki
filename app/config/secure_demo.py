@@ -37,19 +37,19 @@ task_routes = {
 beat_schedule = {
     'get newest dynamic ': {
         'task': 'tasks.get_dynamic_full_data',
-        'schedule': timedelta(hours=2),
+        'schedule': timedelta(minutes=30),
         'args': ([[672346917, 672342685, 672353429, 351609538, 672328094, 703007996], 5])
     },
 
     'get newest reply': {
         'task': 'tasks.generate_reply_spider_task',
-        'schedule': crontab(minute=45, hour='0, 1, 12'),
+        'schedule': crontab(minute=0, hour='0,2,6,9,12,15,18,21'),
         'args': (False)
     },
 
     'pull data': {
         'task': 'tasks.pull_data_task',
-        'schedule': crontab(minute=0, hour='0,6,12,18'),
+        'schedule': crontab(minute=0, hour='1,7,13,17,20,23'),
         'args': ()
     },
 }

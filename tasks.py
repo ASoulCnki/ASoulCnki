@@ -38,7 +38,7 @@ def print_alive():
 @celery_app.task
 def pull_data_task():
     import datetime
-    one_day_ago = (datetime.datetime.now() - datetime.timedelta(days=1))
+    one_day_ago = int((datetime.datetime.now() - datetime.timedelta(days=1)).timestamp())
     return reply.pull_data.task(one_day_ago)
 
 
