@@ -1,6 +1,7 @@
 from datetime import timedelta
 
-from kombu import Exchange, Queue
+from celery.schedules import crontab
+from kombu import Queue
 
 # 定义数据库信息
 SQLALCHEMY_DATABASE_URI = ""
@@ -32,21 +33,23 @@ task_routes = {
     'tasks.get_reply_data_task': {'queue': 'reply_task', 'routing_key': 'reply'},
 }
 
+# noinspection PyRedundantParentheses
 beat_schedule = {
-    'raise exception test': {
-        'task': 'tasks.raise_exception',
-        'schedule': timedelta(seconds=10),
-    },
-
     'get newest dynamic ': {
         'task': 'tasks.get_dynamic_full_data',
-        'schedule': timedelta(hours=2),
-        'args': ([[672346917, 672342685, 672353429, 351609538, 672328094], 5])
+        'schedule': timedelta(minutes=30),
+        'args': ([[672346917, 672342685, 672353429, 351609538, 672328094, 703007996], 5])
     },
 
     'get newest reply': {
         'task': 'tasks.generate_reply_spider_task',
-        'schedule': timedelta(hours=6),
-        'args': False
-    }
+        'schedule': crontab(minute=0, hour='0,2,6,9,12,15,18,21'),
+        'args': (False)
+    },
+
+    'pull data': {
+        'task': 'tasks.pull_data_task',
+        'schedule': crontab(minute=0, hour='1,7,13,17,20,23'),
+        'args': ()
+    },
 }

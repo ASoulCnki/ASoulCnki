@@ -31,6 +31,18 @@ def get_reply_data_task(tuples, pool_num):
 
 
 @celery_app.task
+def print_alive():
+    print("I am still alive")
+
+
+@celery_app.task
+def pull_data_task():
+    import datetime
+    one_day_ago = int((datetime.datetime.now() - datetime.timedelta(days=1)).timestamp())
+    return reply.pull_data.task(one_day_ago)
+
+
+@celery_app.task
 def raise_exception():
     try:
         raise ValueError("error")

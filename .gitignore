@@ -10,3 +10,4 @@ app/config/secure.py
 /database.dat
 /celerybeat-schedule
 /logs
+/celery_sync.sh
