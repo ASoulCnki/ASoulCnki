@@ -58,7 +58,7 @@
           <p class="result_title">原文</p>
           <div class="result_box">
             <div class="result_box_inner">
-              <div id="src_text">{{text}}</div>
+              <div id="src_text" style="word-wrap:break-word;"><p>{{text}}</p></div>
             </div>
           </div>
           <p class="result_title" style="margin-top: 20px">相似小作文</p>
@@ -88,7 +88,7 @@
                       </div>
                       <div class="col-md-6">
                         <p style="margin: 0px">
-                          <span style="white-space: pre-wrap"
+                          <span style="white-space:pre-wrap; word-wrap:break-word;"
                             >{{essay[1].content}}</span
                           >
                         </p>
