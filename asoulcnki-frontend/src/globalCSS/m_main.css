@@ -1,0 +1,60 @@
+#title {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#main_form .panel {
+    width: 90%;
+    margin: auto;
+}
+
+#main_form textarea {
+    resize: none;
+    font-size: large;
+    margin: auto;
+}
+
+#agree_check {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#agree_check input {
+    margin: auto;
+}
+
+#agree_check a {
+    color: #4f6ef2;
+}
+
+#submit_btn_div {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#submit_btn {
+    margin: auto;
+}
+
+#introduction {
+    width: 90%;
+    margin: auto;
+    margin-top: 40px;
+}
+
+#asoul_link {
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#asoul_link a {
+    color: rgb(251, 114, 153);
+}
+
+#introduction a {
+    font-style: normal;
+}
