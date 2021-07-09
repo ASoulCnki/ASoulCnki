@@ -99,6 +99,89 @@ var related = new Vue({
       return now.format("yyyy-MM-dd hh:mm:ss");
     },
   },
+  mounted: function () {
+    //保证加载完成后再处理(用v-html可能发生xss)
+    this.$nextTick(function () {
+      var sanitizeHTML = function (str) {
+        //处理字符串内容防止xss
+        var temp = document.createElement("div");
+        temp.textContent = str;
+        return temp.innerHTML;
+      };
+      var sensitive_len = 4; //敏感的长度
+      var all_text = ""; //所有相关文章拼接起来
+      var related_text_list =
+        document.getElementsByClassName("related_content");
+      var src_text_element = document.getElementById("src_text");
+      var src_text = localStorage.getItem("text");
+      var src_text_result = sanitizeHTML(src_text);
+      for (i = 0; i < related_text_list.length; i++) {
+        related_text_element = related_text_list[i];
+        related_text = sanitizeHTML(related_text_element.innerHTML);
+        var result_text = related_text;
+        all_text += related_text;
+        for (j = 0; j < related_text.length; ) {
+          var dis = 0;
+          var search_text = related_text.substr(j, sensitive_len + dis);
+          while (src_text.indexOf(search_text) != -1) {
+            dis += 1;
+            search_text = related_text.substr(j, sensitive_len + dis);
+            if (j + sensitive_len + dis > related_text.length) {
+              break;
+            }
+          }
+          if (
+            src_text.indexOf(related_text.substr(j, sensitive_len + dis - 1)) !=
+            -1
+          ) {
+            var reg = new RegExp(
+              related_text.substr(j, sensitive_len + dis - 1),
+              "g"
+            );
+            result_text = result_text.replace(
+              reg,
+              "<span style='color:red'>" +
+                sanitizeHTML(related_text.substr(j, sensitive_len + dis - 1)) +
+                "</span>"
+            );
+            console.log(result_text);
+          }
+          j = j + dis + sensitive_len - 1;
+        }
+        related_text_element.innerHTML = result_text;
+      }
+      for (j = 0; j < src_text.length; ) {
+        var dis = 0;
+        search_text = src_text.substr(j, sensitive_len + dis);
+        if (j + sensitive_len + dis >= src_text.length) {
+          break;
+        }
+        while (all_text.indexOf(search_text) != -1) {
+          dis += 1;
+          search_text = src_text.substr(j, sensitive_len + dis);
+          if (j + sensitive_len + dis > src_text.length) {
+            break;
+          }
+        }
+        if (
+          all_text.indexOf(src_text.substr(j, sensitive_len + dis - 1)) != -1
+        ) {
+          var reg = new RegExp(
+            src_text.substr(j, sensitive_len + dis - 1),
+            "g"
+          );
+          src_text_result = src_text_result.replace(
+            reg,
+            "<span style='color:red'>" +
+              sanitizeHTML(src_text.substr(j, sensitive_len + dis - 1)) +
+              "</span>"
+          );
+        }
+        j = j + dis + sensitive_len - 1;
+      }
+      src_text_element.innerHTML = src_text_result;
+    });
+  },
 });
 
 var clipboard = new ClipboardJS("#copy_result_btn", {
@@ -132,7 +215,7 @@ var clipboard = new ClipboardJS("#copy_result_btn", {
     // } else {
     //   comment += "一眼偷🥵\n";
     // }
-    var notice = "\n查重结果仅作参考，请注意辨别是否为原创"
+    var notice = "\n查重结果仅作参考，请注意辨别是否为原创";
     var copy_data =
       data_copyright + data_time + data_rate + data_related + notice;
     return copy_data;
