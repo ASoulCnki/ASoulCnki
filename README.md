@@ -1,5 +1,7 @@
 # A-SOUL评论区小作文 枝网查重系统
 
+项目后端已经迁移至 https://github.com/stream2000/ASoulCnkiBackend
+
   
 ## 简介
 
