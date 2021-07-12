@@ -60,7 +60,7 @@ def parse_dynamic_data(data):
         # TODO: add more reply type and mapping
         else:
             print("type: {} desc: {} card: {} ".format(dynamic_type, card["desc"], card["card"]))
-            # TODO: raise an exception
+            raise ValueError("error unknown type id {} ".format(dynamic_type))
         tuples.append((dynamic_id, r_type, oid, ctime))
 
     return has_more, next_offset, tuples
@@ -70,7 +70,7 @@ def check_dynamic_already_exists(session, dynamic: models.UserDynamic):
     dynamic_class = models.UserDynamic
     try:
         session.query(dynamic_class).filter(
-            or_(dynamic_class.dynamic_id == dynamic.dynamic_id, dynamic_class.oid == dynamic.oid)).one()
+            dynamic_class.dynamic_id == dynamic.dynamic_id).one()
         return True
     except NoResultFound:
         return False

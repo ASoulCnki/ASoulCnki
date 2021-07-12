@@ -2,9 +2,17 @@ import app.models as models
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 from app import utils
+from app.config import sqla
 from app.utils import Throttle
 
 throttle = Throttle(1.5)
+
+
+def delete_dynamic(dynamic_id):
+    session = sqla['session']
+    print("delete dynamic with id {}".format(dynamic_id))
+    session.query(models.UserDynamic).filter(models.UserDynamic.dynamic_id == dynamic_id).delete()
+    session.commit()
 
 
 def crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset):
@@ -15,6 +23,10 @@ def crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset):
     r = utils.url_get(url=url, mode="json")
 
     if ("code" not in r) or r["code"] != 0:
+        code = r["code"]
+        if code == 12002:
+            delete_dynamic(dynamic_id)
+            return True, 0, []
         raise ValueError("Error response code: {}".format(r["code"]))
 
     data = r["data"]

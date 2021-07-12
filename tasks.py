@@ -30,10 +30,8 @@ def get_reply_data_task(type_id, oid, status, dynamic_id):
     try:
         reply.get_reply_data.task(type_id, oid, status, dynamic_id)
     except Exception as e:
-        print(e)
-        get_reply_data_task(type_id, oid, status, dynamic_id).apply_async((type_id, oid, status, dynamic_id),
-                                                                          countdown=60 * 10)
-        os.system("sh stop.sh")
+        print("here we encounter error {}".format(e))
+        os.system("bash stop.sh")
 
 
 @celery_app.task
