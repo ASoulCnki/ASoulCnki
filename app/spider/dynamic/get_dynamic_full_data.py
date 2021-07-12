@@ -21,6 +21,7 @@ def create_request_and_save_data(member_id):
                 dynamic.dynamic_id = reply_tuple[0]
                 dynamic.type_id = reply_tuple[1]
                 dynamic.oid = reply_tuple[2]
+                dynamic.ctime = reply_tuple[3]
                 dynamic.status = 0
 
                 if check_dynamic_already_exists(session, dynamic):

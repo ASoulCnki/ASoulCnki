@@ -4,9 +4,11 @@ create table user_dynamic
     dynamic_id bigint comment '动态唯一id',
     type_id    int comment '动态类型, 用于获取评论',
     oid        bigint comment '动态对象id，用于获取评论',
+    ctime      int comment '动态创建时间',
+    uid        int comment '动态uid',
     status     int comment '评论爬取状态，0: 未爬取， 1: 至少爬取完成过一次',
     primary key (dynamic_id)
-) DEFAULT CHARACTER SET = utf8bm4;
+) DEFAULT CHARACTER SET = utf8mb4;
 
 drop table if exists kv;
 create table kv_store
@@ -14,7 +16,7 @@ create table kv_store
     field_name  varchar(255) NOT NULL,
     field_value text         NOT NULL,
     primary key (field_name)
-) DEFAULT CHARACTER SET = utf8bm4;
+) DEFAULT CHARACTER SET = utf8mb4;
 
 drop table if exists reply;
 create table reply
@@ -29,4 +31,4 @@ create table reply
     content    text comment '评论内容',
     like_num   int,
     primary key (rpid)
-) DEFAULT CHARACTER SET = utf8bm4;
+) DEFAULT CHARACTER SET = utf8mb4;

@@ -37,6 +37,7 @@ def parse_dynamic_data(data):
 
         dynamic_type = card["desc"]["type"]
         dynamic_id = card["desc"]["dynamic_id"]
+        ctime = card["desc"]["timestamp"]
         rid = card["desc"]["rid"]
 
         # we need to map dynamic type to reply type, and choose right reply oid,
@@ -60,7 +61,7 @@ def parse_dynamic_data(data):
         else:
             print("type: {} desc: {} card: {} ".format(dynamic_type, card["desc"], card["card"]))
             # TODO: raise an exception
-        tuples.append((dynamic_id, r_type, oid))
+        tuples.append((dynamic_id, r_type, oid, ctime))
 
     return has_more, next_offset, tuples
 

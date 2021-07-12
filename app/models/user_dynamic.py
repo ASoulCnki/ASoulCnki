@@ -14,3 +14,4 @@ class UserDynamic(Base):
     oid = Column(BIGINT)
     # 爬取状态
     status = Column(Integer)
+    ctime = Column(Integer)
