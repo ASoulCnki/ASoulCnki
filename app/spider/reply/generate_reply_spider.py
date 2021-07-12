@@ -3,38 +3,19 @@ import app.models as models
 import tasks
 
 
-def send_reply_spider_task(un_inited_only):
+def send_low_priority_reply_spider_task():
     session = sqla['session']
+    inited_dynamics = session.query(models.UserDynamic).filter(models.UserDynamic.status == 1).all()
+    for dynamic in inited_dynamics:
+        param_tuple = (dynamic.type_id, dynamic.oid, dynamic.status, dynamic.dynamic_id)
+        tasks.get_reply_data_task.apply_async(param_tuple, queue="reply_task_low_priority")
 
-    pool_num = 4
-    if not un_inited_only:
-        inited_dynamics = session.query(models.UserDynamic).filter(models.UserDynamic.status == 1).all()
-        batch_size = 1
-        batch_count = 0
-        batch = []
-        for dynamic in inited_dynamics:
-            batch_count += 1
-            batch.append((dynamic.type_id, dynamic.oid, dynamic.status, dynamic.dynamic_id))
-            if batch_count == batch_size:
-                tasks.get_reply_data_task.delay(batch, pool_num)
-                batch = []
-                batch_count = 0
 
-        if batch_count > 0:
-            tasks.get_reply_data_task.delay(batch, pool_num)
+def send_high_priority_reply_spider_task():
+    session = sqla['session']
 
     un_inited_dynamics = session.query(models.UserDynamic).filter(models.UserDynamic.status == 0).all()
     for dynamic in un_inited_dynamics:
         param_tuple = (dynamic.type_id, dynamic.oid, dynamic.status, dynamic.dynamic_id)
-        tasks.get_reply_data_task.delay([param_tuple], pool_num)
-
-
-def task(un_inited_only):
-    session = sqla['session']
-    state = session.query(models.KvStore).filter(models.KvStore.field_name == 'state').all()
-
-    # duplication_check if the database is inited, if not, do initialization
-    if not len(state):
-        return
-
-    send_reply_spider_task(un_inited_only)
+        tasks.get_reply_data_task.apply_async(param_tuple, queue="reply_task_low_priority")
+        tasks.get_reply_data_task.delay(param_tuple)

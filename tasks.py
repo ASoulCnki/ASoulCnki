@@ -6,33 +6,34 @@ from app.spider import dynamic, reply
 
 
 @celery_app.task
-def get_dynamic_full_data_task(member_ids, pool_num):
-    return dynamic.get_dynamic_full_data.task(member_ids, pool_num)
+def get_dynamic_full_data_task(member_ids):
+    return dynamic.get_dynamic_full_data.task(member_ids)
 
 
 @celery_app.task
-def get_dynamic_base_data_task(member_ids, pool_num):
-    return dynamic.get_dynamic_base_data.task(member_ids, pool_num)
+def get_dynamic_base_data_task(member_ids):
+    return dynamic.get_dynamic_base_data.task(member_ids)
 
 
 @celery_app.task
-def generate_reply_spider_task(un_inited_only):
-    return reply.generate_reply_spider.task(un_inited_only)
+def generate_low_priority_reply_spider_task():
+    return reply.generate_reply_spider.send_low_priority_reply_spider_task()
 
 
 @celery_app.task
-def get_reply_data_task(tuples, pool_num):
+def generate_high_priority_reply_spider_task():
+    return reply.generate_reply_spider.send_high_priority_reply_spider_task()
+
+
+@celery_app.task
+def get_reply_data_task(type_id, oid, status, dynamic_id):
     try:
-        reply.get_reply_data.task(tuples, pool_num)
+        reply.get_reply_data.task(type_id, oid, status, dynamic_id)
     except Exception as e:
         print(e)
-        get_reply_data_task(tuples, pool_num).delay()
+        get_reply_data_task(type_id, oid, status, dynamic_id).apply_async((type_id, oid, status, dynamic_id),
+                                                                          countdown=60 * 10)
         os.system("sh stop.sh")
-
-
-@celery_app.task
-def print_alive():
-    print("I am still alive")
 
 
 @celery_app.task

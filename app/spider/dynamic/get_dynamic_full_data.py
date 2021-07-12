@@ -40,7 +40,7 @@ def create_request_and_save_data(member_id):
     return True
 
 
-def task(member_ids, pool_number):
+def task(member_ids):
     session = sqla['session']
     state = session.query(models.KvStore).filter(models.KvStore.field_name == 'state').all()
 

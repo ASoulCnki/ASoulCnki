@@ -22,7 +22,8 @@ worker_max_tasks_per_child = 2
 task_queues = (
     Queue('default', routing_key='default'),
     Queue('dynamic_task', routing_key='dynamic'),
-    Queue('reply_task', routing_key='reply'),
+    Queue('reply_task_high_priority', routing_key='reply_high'),
+    Queue('reply_task_low_priority', routing_key='reply_low'),
 )
 
 task_routes = {
@@ -38,7 +39,7 @@ beat_schedule = {
     'get newest dynamic ': {
         'task': 'tasks.get_dynamic_full_data',
         'schedule': timedelta(minutes=30),
-        'args': ([[672346917, 672342685, 672353429, 351609538, 672328094, 703007996], 5])
+        'args': ([[672346917, 672342685, 672353429, 351609538, 672328094, 703007996]])
     },
 
     'get newest reply': {

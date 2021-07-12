@@ -5,15 +5,10 @@ from app.config import sqla
 from app.spider.reply.reply_spider import crawl_reply_once, check_reply_already_exists
 
 
-def create_request_and_save_data(reply_param_tuple):
+def create_request_and_save_data(type_id, oid, status, dynamic_id):
     session = sqla['session']
 
-    print("start to crawl reply with param {}".format(reply_param_tuple))
-
-    type_id = reply_param_tuple[0]
-    oid = reply_param_tuple[1]
-    status = reply_param_tuple[2]
-    dynamic_id = reply_param_tuple[3]
+    print("start to crawl reply with dynamic id {}, status {}".format(dynamic_id, status))
 
     page_size = 49
     next_offset = 0
@@ -52,11 +47,9 @@ def create_request_and_save_data(reply_param_tuple):
             raise e
 
 
-def task(tuples, pool_number):
+def task(type_id, oid, status, dynamic_id):
     time_start = time.time()
-
-    for reply_param_tuple in tuples:
-        create_request_and_save_data(reply_param_tuple)
+    create_request_and_save_data(type_id, oid, status, dynamic_id)
 
     time_end = time.time()
     print('crawl reply cost', time_end - time_start, 's')

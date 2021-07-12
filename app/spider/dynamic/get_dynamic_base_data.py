@@ -18,30 +18,35 @@ def create_requests_and_save_data(member_id):
     while True:
         try:
             has_more, offset, tuples = crawl_dynamic_once(member_id, offset)
-        except Exception:
-            return False
+        except Exception as e:
+            print("encounter exception {} when crawling user dynamic with id {}".format(e, member_id))
+            raise e
         result += tuples
         if has_more == 0:
             break
 
-    for reply_tuple in result:
-        dynamic = models.UserDynamic()
-        dynamic.dynamic_id = reply_tuple[0]
-        dynamic.type_id = reply_tuple[1]
-        dynamic.oid = reply_tuple[2]
-        dynamic.ctime = reply_tuple[3]
-        dynamic.status = 0
-        if check_dynamic_already_exists(session, dynamic):
-            continue
-        session.add(dynamic)
-        session.commit()
+    try:
+        for reply_tuple in result:
+            dynamic = models.UserDynamic()
+            dynamic.dynamic_id = reply_tuple[0]
+            dynamic.type_id = reply_tuple[1]
+            dynamic.oid = reply_tuple[2]
+            dynamic.ctime = reply_tuple[3]
+            dynamic.status = 0
+            if check_dynamic_already_exists(session, dynamic):
+                continue
+            session.add(dynamic)
+    except Exception as e:
+        session.rollback()
+        raise e
 
+    session.commit()
     time_end = time.time()
     print("finished crawl dynamics for member {}, cost {}".format(member_id, time_end - time_start))
     return True
 
 
-def task(member_ids, pool_number):
+def task(member_ids):
     session = sqla['session']
     state = session.query(models.KvStore).filter(models.KvStore.field_name == 'state').all()
 
