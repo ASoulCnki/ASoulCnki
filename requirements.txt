@@ -4,10 +4,5 @@ redis==3.5.3
 requests==2.22.0
 pymysql==1.0.2
 cryptography==3.4.7
-jieba==0.42.1
 Cython==0.29.23
-Flask~=2.0.1
-Flask-Cors==3.0.10
-Werkzeug~=2.0.1
 kombu~=5.1.0
-readerwriterlock==1.0.8

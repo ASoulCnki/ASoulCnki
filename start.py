@@ -1,5 +1,6 @@
 import sys
 
+from app.lib.mail import send_mail
 from tasks import (
     generate_low_priority_reply_spider_task,
     generate_high_priority_reply_spider_task,
@@ -11,7 +12,7 @@ asoul_member_ids = [672346917, 672342685, 672353429, 351609538, 672328094, 70300
 
 
 def init_dynamic():
-    get_dynamic_base_data_task.delay(asoul_member_ids, 5)
+    get_dynamic_base_data_task.delay(asoul_member_ids)
 
 
 def init_reply():
@@ -22,6 +23,7 @@ def init_reply():
 def update_database():
     get_dynamic_full_data_task.delay(asoul_member_ids).get()
     init_reply()
+    pull_data()
 
 
 def pull_data():
@@ -38,5 +40,7 @@ if __name__ == '__main__':
             update_database()
         elif sys.argv[1] == 'pull_data':
             pull_data()
+        elif sys.argv[1] == 'send_mail':
+            send_mail("hello")
     else:
         print("error param number")

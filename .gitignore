@@ -11,3 +11,4 @@ app/config/secure.py
 /celerybeat-schedule
 /logs
 /celery_sync.sh
+/flower.log

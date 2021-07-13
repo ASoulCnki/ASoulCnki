@@ -7,6 +7,11 @@ from kombu import Queue
 SQLALCHEMY_DATABASE_URI = ""
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+mail_host = "smtp.163.com"
+mail_sender = "xxx@163.com"
+mail_license = "xxx"
+mail_receivers = ["xxx@163.com"]
+
 # 定义celery信息
 broker_url = "redis://:1234@localhost:6379/0"
 result_backend = "redis://:1234@localhost:6379/1"
@@ -39,18 +44,24 @@ beat_schedule = {
     'get newest dynamic ': {
         'task': 'tasks.get_dynamic_full_data',
         'schedule': timedelta(minutes=30),
-        'args': ([[672346917, 672342685, 672353429, 351609538, 672328094, 703007996]])
+        'args': ([[672346917, 672342685, 672353429, 351609538, 672328094, 703007996], 5])
     },
 
-    'get newest reply': {
-        'task': 'tasks.generate_reply_spider_task',
-        'schedule': crontab(minute=0, hour='0,2,6,9,12,15,18,21'),
-        'args': (False)
+    'low priority reply task': {
+        'task': 'tasks.generate_low_priority_reply_spider_task',
+        'schedule': crontab(minute=0, hour='4,16'),
+        'args': ([])
+    },
+
+    'high priority reply task': {
+        'task': 'tasks.generate_high_priority_reply_spider_task',
+        'schedule': crontab(minute=0, hour='0,3,6,9,12,15,18,21'),
+        'args': ([])
     },
 
     'pull data': {
         'task': 'tasks.pull_data_task',
-        'schedule': crontab(minute=0, hour='1,7,13,17,20,23'),
+        'schedule': crontab(minute=0, hour='1,7,13,19'),
         'args': ()
     },
 }

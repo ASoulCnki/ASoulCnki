@@ -53,8 +53,6 @@ def task(member_ids):
     # duplication_check if the database is inited, if not, do initialization
     if not len(state):
 
-        session.execute("truncate table user_dynamic")
-
         time_start = time.time()
         print("start to crawl user dynamic...")
 
