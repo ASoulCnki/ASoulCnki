@@ -38,7 +38,7 @@ def create_request_and_save_data(type_id, oid, status, dynamic_id):
     # modify status
     if status == 0:
         try:
-            dynamic = session.query(models.UserDynamic).filter(models.UserDynamic.oid == oid).one()
+            dynamic = session.query(models.UserDynamic).filter(models.UserDynamic.dynamic_id == dynamic_id).one()
             dynamic.status = 1
             session.add(dynamic)
             session.commit()

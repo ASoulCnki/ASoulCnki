@@ -64,3 +64,8 @@ def raise_exception():
         raise_exception.delay()
         time.sleep(1)
         os.system("sh stop.sh")
+
+
+@celery_app.task
+def send_stats_email():
+    reply.stats.get_stats()

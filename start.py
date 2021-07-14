@@ -5,7 +5,8 @@ from tasks import (
     generate_low_priority_reply_spider_task,
     generate_high_priority_reply_spider_task,
     get_dynamic_base_data_task,
-    pull_data_task, get_dynamic_full_data_task
+    pull_data_task, get_dynamic_full_data_task,
+    raise_exception
 )
 
 asoul_member_ids = [672346917, 672342685, 672353429, 351609538, 672328094, 703007996]
@@ -42,5 +43,8 @@ if __name__ == '__main__':
             pull_data()
         elif sys.argv[1] == 'send_mail':
             send_mail("hello")
+        elif sys.argv[1] == 'kill':
+            raise_exception()
+
     else:
         print("error param number")

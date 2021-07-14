@@ -17,10 +17,10 @@ class AutoSendErrorMail:
         self.body_content = body_content
 
     # 发送错误日志邮件
-    def send_email(self):
+    def send_email(self, title):
         mm = MIMEMultipart('related')
         # 邮件主题
-        subject_content = """爬虫出现错误！"""
+        subject_content = title
         # 设置发送者,注意严格遵守格式,里面邮箱为发件人邮箱
         mm["From"] = "AsoulCnki<{}>".format(self.mail_sender)
         # 设置接受者,注意严格遵守格式,里面邮箱为接受者邮箱
@@ -46,7 +46,7 @@ class AutoSendErrorMail:
         stp.quit()
 
 
-def send_mail(text):
+def send_mail(text, title="爬虫出现错误！"):
     from app.config.secure import mail_sender, mail_host, mail_license, mail_receivers
     mail_obj = AutoSendErrorMail(mail_host, mail_sender, mail_license, mail_receivers, text)
-    mail_obj.send_email()
+    mail_obj.send_email(title)
