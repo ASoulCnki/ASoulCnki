@@ -3,6 +3,7 @@ import time
 import app.models as models
 from app.config import sqla
 from app.spider.reply.reply_spider import crawl_reply_once, check_reply_already_exists
+from pymysql.err import IntegrityError
 
 
 def create_request_and_save_data(type_id, oid, status, dynamic_id):
@@ -31,6 +32,8 @@ def create_request_and_save_data(type_id, oid, status, dynamic_id):
                         session.commit()
             if is_end:
                 break
+        except IntegrityError:  # another spider is executing the same task
+            continue
         except Exception as e:
             session.rollback()
             raise e
