@@ -1,8 +1,10 @@
 # A-SOUL评论区小作文 枝网查重系统
 
-项目后端（基于spring boot）已经迁移至 https://github.com/stream2000/ASoulCnkiBackend  
-项目前端（基于vue2）正迁移至 https://github.com/WHUT-XGP/ASoulCnkiFrontend  
-本项目为枝网查重的动态的保存+评论区爬虫部分
+网站地址：https://asoulcnki.asia  
+项目首页：https://github.com/ASoulCnki       
+项目后端（基于spring boot）已迁移至 https://github.com/stream2000/ASoulCnkiBackend  
+项目前端（基于vue2）已迁移至 https://github.com/WHUT-XGP/ASoulCnkiFrontend  
+本项目为枝网查重的动态+评论区爬虫部分
   
 ## 简介
 
