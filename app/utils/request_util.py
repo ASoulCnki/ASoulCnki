@@ -1,9 +1,9 @@
 from requests import get
 
 
-def url_get(url, mode=None, timeout=20):
+def url_get(url, mode=None, timeout=20,count=0):
     # 重试次数
-    retry_count = 0
+    retry_count = count
     try:
         if mode is None:
             return get(url=url, timeout=timeout)
@@ -22,8 +22,8 @@ def url_get(url, mode=None, timeout=20):
         if retry_count > 3:
             raise Exception("Maximum retries")
         else:
-            url_get(url=url, mode=mode)
-            retry_count += 1
+            url_get(url=url, mode=mode,count=retry_count+1)
+
 
 
 def dict_get(dict_, obj_key):
