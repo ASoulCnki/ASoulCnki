@@ -43,8 +43,6 @@ def parse_dynamic_data(data):
         # we need to map dynamic type to reply type, and choose right reply oid,
         # see https://github.com/SocialSisterYi/bilibili-API-collect/tree/master/comment
 
-        oid = 0
-        r_type = 0
         if dynamic_type == 1 or dynamic_type == 4:
             r_type = 17
             oid = dynamic_id
@@ -70,7 +68,7 @@ def check_dynamic_already_exists(session, dynamic: models.UserDynamic):
     dynamic_class = models.UserDynamic
     try:
         session.query(dynamic_class).filter(
-            dynamic_class.dynamic_id == dynamic.dynamic_id).one()
+            or_(dynamic_class.dynamic_id == dynamic.dynamic_id, dynamic_class.oid == dynamic.oid)).one()
         return True
     except NoResultFound:
         return False
