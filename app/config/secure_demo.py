@@ -34,6 +34,7 @@ task_queues = (
 task_routes = {
     'tasks.generate_low_priority_reply_spider_task': {'queue': 'default', 'routing_key': 'default'},
     'tasks.generate_high_priority_reply_spider_task': {'queue': 'default', 'routing_key': 'default'},
+    'tasks.generate_refresh_like_num_task': {'queue': 'default', 'routing_key': 'default'},
     'tasks.raise_exception': {'queue': 'default', 'routing_key': 'default'},
     'tasks.get_dynamic_full_data_task': {'queue': 'dynamic_task', 'routing_key': 'dynamic'},
     'tasks.get_dynamic_base_data_task': {'queue': 'dynamic_task', 'routing_key': 'dynamic'},
@@ -57,18 +58,25 @@ beat_schedule = {
 
     'high priority reply task': {
         'task': 'tasks.generate_high_priority_reply_spider_task',
-        'schedule': crontab(minute=0, hour='0,3,6,9,12,15,18,21'),
+        'schedule': crontab(minute=0, hour='4,16'),
         'args': ([])
     },
 
     'pull data': {
         'task': 'tasks.pull_data_task',
-        'schedule': crontab(minute=0, hour='1,7,13,19'),
+        'schedule': crontab(minute=0, hour='2,8,14,20'),
         'args': ()
     },
+
     'get stats': {
         'task': 'tasks.send_stats_email',
         'schedule': crontab(minute=30, hour='8'),
         'args': ()
+    },
+
+    'refresh like num': {
+        'task': 'tasks.generate_refresh_like_num_task',
+        'schedule': crontab(minute=0, hour='0,3,6,9,12,15,18,21'),
+        'args': ([])
     },
 }
