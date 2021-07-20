@@ -1,6 +1,7 @@
 import sys
 
 from app.lib.mail import send_mail
+from app.config.secure import member_ids
 from tasks import (
     generate_low_priority_reply_spider_task,
     generate_high_priority_reply_spider_task,
@@ -9,7 +10,7 @@ from tasks import (
     raise_exception
 )
 
-asoul_member_ids = [672346917, 672342685, 672353429, 351609538, 672328094, 703007996]
+asoul_member_ids = member_ids
 
 
 def init_dynamic():
