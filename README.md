@@ -4,8 +4,8 @@
 项目首页：https://github.com/ASoulCnki       
 项目后端（基于spring boot）已迁移至 https://github.com/stream2000/ASoulCnkiBackend  
 项目前端（基于vue2）已迁移至 https://github.com/WHUT-XGP/ASoulCnkiFrontend  
-本项目为枝网查重的动态+评论区爬虫部分
-  
+本项目为枝网查重的动态+评论区爬虫部分  
+爬虫部署文档:[Deploy.md](./Deploy.md)  
 ## 简介
 
 

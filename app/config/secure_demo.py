@@ -3,6 +3,12 @@ from datetime import timedelta
 from celery.schedules import crontab
 from kombu import Queue
 
+# 爬取用户id
+member_ids = [672346917, 672342685, 672353429, 351609538, 672328094, 703007996]
+
+# 后端地址
+base_url = "https://asoulcnki.asia/v1/api/data/pull"
+
 # 定义数据库信息
 SQLALCHEMY_DATABASE_URI = ""
 SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -47,7 +53,7 @@ beat_schedule = {
     'get newest dynamic ': {
         'task': 'tasks.get_dynamic_full_data_task',
         'schedule': timedelta(minutes=30),
-        'args': ([[672346917, 672342685, 672353429, 351609538, 672328094, 703007996]])
+        'args': ([member_ids])
     },
 
     'low priority reply task': {
