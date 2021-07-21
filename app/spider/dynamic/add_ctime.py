@@ -31,6 +31,7 @@ def create_requests_and_save_data(member_id):
                     continue
                 dynamic.type_id = reply_tuple[1]
                 dynamic.oid = reply_tuple[2]
+                dynamic.uid = member_id
                 dynamic.ctime = reply_tuple[3]
                 dynamic.status = 0
                 session.add(dynamic)
