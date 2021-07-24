@@ -3,6 +3,7 @@ from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 from app import utils
 from app.config import sqla
+from app.lib import send_mail
 from app.utils import Throttle
 
 throttle = Throttle(1.5)
@@ -25,7 +26,13 @@ def crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset):
     if ("code" not in r) or r["code"] != 0:
         code = r["code"]
         if code == 12002:
+            text = "dynamic with id {} return 12002, delete it".format(dynamic_id)
+            send_mail(text=text, title="动态12002警告")
             delete_dynamic(dynamic_id)
+            return True, 0, []
+        if code == 404:
+            text = "dynamic with id {} return 404 in offset {} , ignore it".format(dynamic_id, next_offset)
+            send_mail(text=text, title="动态404警告")
             return True, 0, []
         raise ValueError("Error response code: {}".format(r["code"]))
 
