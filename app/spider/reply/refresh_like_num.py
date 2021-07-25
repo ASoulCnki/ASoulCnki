@@ -15,7 +15,7 @@ def create_request_and_save_data(type_id, oid, dynamic_id, min_time):
             for reply in result:
                 # we only process replies after ctime
                 if reply.ctime < min_time:
-                    break
+                    return
                 old_reply = session.query(models.Reply).filter(models.Reply.rpid == reply.rpid).one_or_none()
                 if old_reply is None:
                     session.add(reply)
