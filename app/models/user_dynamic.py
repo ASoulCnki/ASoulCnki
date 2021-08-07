@@ -12,6 +12,8 @@ class UserDynamic(Base):
     dynamic_id = Column(BIGINT, primary_key=True)
     type_id = Column(Integer)
     oid = Column(BIGINT)
+    # 用户uid
+    uid = Column(BIGINT)
     # 爬取状态
     status = Column(Integer)
     ctime = Column(Integer)

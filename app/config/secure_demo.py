@@ -3,6 +3,7 @@ from datetime import timedelta
 from celery.schedules import crontab
 from kombu import Queue
 
+CONTROL_SECURE_KEY = "1234"
 # 爬取用户id
 member_ids = [672346917, 672342685, 672353429, 351609538, 672328094, 703007996]
 
