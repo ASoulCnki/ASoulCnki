@@ -29,7 +29,7 @@ def update_database():
 
 
 def pull_data():
-    pull_data_task.delay().get()
+    pull_data_task.delay()
 
 
 if __name__ == '__main__':

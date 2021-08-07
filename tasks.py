@@ -36,32 +36,30 @@ def generate_high_priority_reply_spider_task():
 
 
 @celery_app.task
-def get_reply_data_task(type_id, oid, status, dynamic_id):
+def get_reply_data_task(type_id, oid, status, dynamic_id, uid):
     try:
-        reply.get_reply_data.task(type_id, oid, status, dynamic_id)
+        reply.get_reply_data.task(type_id, oid, status, dynamic_id, uid)
     except Exception as e:
         send_mail("get reply task error, host:{}  error: {}".format(socket.gethostname(), e))
-        os.system("bash stop.sh")
+        time.sleep(60 * 60 * 2)
 
 
 @celery_app.task
 def pull_data_task():
     try:
         import datetime
-        one_day_ago = int((datetime.datetime.now() - datetime.timedelta(days=1)).timestamp())
+        one_day_ago = int((datetime.datetime.now() - datetime.timedelta(days=7)).timestamp())
         reply.pull_data.task(one_day_ago)
     except Exception as e:
         send_mail("get reply task error, host:{}  error: {}".format(socket.gethostname(), e))
-        os.system("bash stop.sh")
 
 
 @celery_app.task
-def refresh_like_num_task(type_id, oid, dynamic_id, min_time):
+def refresh_like_num_task(type_id, oid, dynamic_id, uid, min_time):
     try:
-        reply.refresh_like_num.task(type_id, oid, dynamic_id, min_time)
+        reply.refresh_like_num.task(type_id, oid, dynamic_id, uid, min_time)
     except Exception as e:
         send_mail("get reply task error, host:{}  error: {}".format(socket.gethostname(), e))
-        os.system("bash stop.sh")
 
 
 @celery_app.task
@@ -72,7 +70,7 @@ def generate_refresh_like_num_task():
         reply.generate_refresh_like_spider.send_refresh_like_spider(one_week_ago)
     except Exception as e:
         send_mail("refresh like num task error, host:{}  error: {}".format(socket.gethostname(), e))
-        os.system("bash stop.sh")
+        time.sleep(60 * 60 * 2)
 
 
 @celery_app.task

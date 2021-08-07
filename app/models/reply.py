@@ -11,6 +11,7 @@ class Reply(Base):
     dynamic_id = Column(BIGINT, primary_key=True)
     type_id = Column(Integer)
     mid = Column(Integer)
+    uid = Column(Integer) # member uid that sent the dynamic
     oid = Column(BIGINT)
     ctime = Column(Integer)
     m_name = Column(String(255))

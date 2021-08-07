@@ -25,9 +25,8 @@ def create_requests_and_save_data(member_id):
                 dynamic.dynamic_id = reply_tuple[0]
                 dynamic_in_database = check_dynamic_already_exists(session, dynamic)
                 if dynamic_in_database is not None:
-                    session.query(models.UserDynamic).filter(
-                        models.UserDynamic.dynamic_id == dynamic.dynamic_id).update(
-                        {"ctime": reply_tuple[3]})
+                    session.query(models.UserDynamic).filter(models.UserDynamic.dynamic_id == dynamic.dynamic_id).update(
+                        {"uid": member_id})
                     session.commit()
                     continue
                 dynamic.type_id = reply_tuple[1]

@@ -4,7 +4,7 @@ from app.utils.request_util import *
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from sqlalchemy import or_
 
-throttle = Throttle(1)
+throttle = Throttle(1.5)
 
 bilibili_dynamic_url = "https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history"
 

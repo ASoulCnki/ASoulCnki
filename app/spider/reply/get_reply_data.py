@@ -6,7 +6,7 @@ from app.spider.reply.reply_spider import crawl_reply_once, check_reply_already_
 from pymysql.err import IntegrityError
 
 
-def create_request_and_save_data(type_id, oid, status, dynamic_id):
+def create_request_and_save_data(type_id, oid, status, dynamic_id, uid):
     session = sqla['session']
 
     print("start to crawl reply with dynamic id {}, status {}".format(dynamic_id, status))
@@ -18,6 +18,7 @@ def create_request_and_save_data(type_id, oid, status, dynamic_id):
         try:
             is_end, next_offset, result = crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset)
             for reply in result:
+                reply.uid = uid
                 already_exists = check_reply_already_exists(session, reply)
                 if status == 0:
                     if not already_exists:
@@ -35,6 +36,8 @@ def create_request_and_save_data(type_id, oid, status, dynamic_id):
         except IntegrityError:  # another spider is executing the same task
             continue
         except Exception as e:
+            import logging
+            logging.exception(e)
             session.rollback()
             raise e
 
@@ -50,9 +53,9 @@ def create_request_and_save_data(type_id, oid, status, dynamic_id):
             raise e
 
 
-def task(type_id, oid, status, dynamic_id):
+def task(type_id, oid, status, dynamic_id, uid):
     time_start = time.time()
-    create_request_and_save_data(type_id, oid, status, dynamic_id)
+    create_request_and_save_data(type_id, oid, status, dynamic_id, uid)
 
     time_end = time.time()
     print('crawl reply cost', time_end - time_start, 's')

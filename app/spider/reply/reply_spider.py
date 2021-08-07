@@ -6,7 +6,7 @@ from app.config import sqla
 from app.lib import send_mail
 from app.utils import Throttle
 
-throttle = Throttle(1.5)
+throttle = Throttle(2)
 
 
 def delete_dynamic(dynamic_id):
@@ -22,6 +22,9 @@ def crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset):
     # do throttle control before requesting url
     throttle.wait_url("https://api.bilibili.com/x/v2/reply/main")
     r = utils.url_get(url=url, mode="json")
+
+    if r is None:
+        return True, 0, []
 
     if ("code" not in r) or r["code"] != 0:
         code = r["code"]

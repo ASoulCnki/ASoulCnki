@@ -3,7 +3,7 @@ from app.config import sqla
 from app.spider.reply.reply_spider import crawl_reply_once
 
 
-def create_request_and_save_data(type_id, oid, dynamic_id, min_time):
+def create_request_and_save_data(type_id, oid, dynamic_id, uid, min_time):
     session = sqla['session']
 
     page_size = 49
@@ -13,6 +13,7 @@ def create_request_and_save_data(type_id, oid, dynamic_id, min_time):
         try:
             is_end, next_offset, result = crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset)
             for reply in result:
+                reply.uid = uid
                 # we only process replies after ctime
                 if reply.ctime < min_time:
                     return
@@ -32,8 +33,8 @@ def create_request_and_save_data(type_id, oid, dynamic_id, min_time):
             raise e
 
 
-def task(type_id, oid, dynamic_id, min_time):
-    create_request_and_save_data(type_id, oid, dynamic_id, min_time)
+def task(type_id, oid, dynamic_id, uid, min_time):
+    create_request_and_save_data(type_id, oid, dynamic_id, uid, min_time)
 
 
 if __name__ == '__main__':
