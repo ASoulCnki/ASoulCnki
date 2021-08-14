@@ -51,7 +51,7 @@ def pull_data_task():
         one_day_ago = int((datetime.datetime.now() - datetime.timedelta(days=7)).timestamp())
         reply.pull_data.task(one_day_ago)
     except Exception as e:
-        send_mail("get reply task error, host:{}  error: {}".format(socket.gethostname(), e))
+        send_mail("pull data task error, host:{}  error: {}".format(socket.gethostname(), e))
 
 
 @celery_app.task
@@ -59,7 +59,8 @@ def refresh_like_num_task(type_id, oid, dynamic_id, uid, min_time):
     try:
         reply.refresh_like_num.task(type_id, oid, dynamic_id, uid, min_time)
     except Exception as e:
-        send_mail("get reply task error, host:{}  error: {}".format(socket.gethostname(), e))
+        send_mail("refresh like task error, host:{}  error: {}".format(socket.gethostname(), e))
+        time.sleep(60 * 60 * 2)
 
 
 @celery_app.task

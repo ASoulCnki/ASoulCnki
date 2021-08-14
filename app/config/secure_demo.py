@@ -59,19 +59,19 @@ beat_schedule = {
 
     'low priority reply task': {
         'task': 'tasks.generate_low_priority_reply_spider_task',
-        'schedule': crontab(minute=0, hour='4,16'),
+        'schedule': crontab(minute=0, hour='9,19'),
         'args': ([])
     },
 
     'high priority reply task': {
         'task': 'tasks.generate_high_priority_reply_spider_task',
-        'schedule': crontab(minute=0, hour='4,16'),
+        'schedule': crontab(minute=0, hour='0,3,6,9,12,15,18,21'),
         'args': ([])
     },
 
     'pull data': {
         'task': 'tasks.pull_data_task',
-        'schedule': crontab(minute=0, hour='2,8,14,20'),
+        'schedule': crontab(minute=0, hour='2,12,18,22'),
         'args': ()
     },
 
@@ -83,7 +83,7 @@ beat_schedule = {
 
     'refresh like num': {
         'task': 'tasks.generate_refresh_like_num_task',
-        'schedule': crontab(minute=0, hour='0,3,6,9,12,15,18,21'),
+        'schedule': crontab(minute=0, hour='8,16'),
         'args': ([])
     },
 }
