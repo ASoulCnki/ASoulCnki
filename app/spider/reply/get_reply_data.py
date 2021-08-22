@@ -17,6 +17,8 @@ def create_request_and_save_data(type_id, oid, status, dynamic_id, uid):
     while not finished:
         try:
             is_end, next_offset, result = crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset)
+            if is_end or next_offset == 0:
+                finished = True
             for reply in result:
                 reply.uid = uid
                 already_exists = check_reply_already_exists(session, reply)
@@ -31,8 +33,6 @@ def create_request_and_save_data(type_id, oid, status, dynamic_id, uid):
                     else:
                         session.add(reply)
                         session.commit()
-            if is_end:
-                break
         except IntegrityError:  # another spider is executing the same task
             continue
         except Exception as e:
@@ -59,3 +59,7 @@ def task(type_id, oid, status, dynamic_id, uid):
 
     time_end = time.time()
     print('crawl reply cost', time_end - time_start, 's')
+
+
+if __name__ == '__main__':
+    task(1, 589913922, 0, 560951543798054703, 672328094)

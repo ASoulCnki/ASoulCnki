@@ -12,6 +12,8 @@ def create_request_and_save_data(type_id, oid, dynamic_id, uid, min_time):
     while not finished:
         try:
             is_end, next_offset, result = crawl_reply_once(oid, type_id, dynamic_id, page_size, next_offset)
+            if is_end or next_offset == 0:
+                finished = True
             for reply in result:
                 reply.uid = uid
                 # we only process replies after ctime
@@ -26,8 +28,6 @@ def create_request_and_save_data(type_id, oid, dynamic_id, uid, min_time):
                         session.query(models.Reply).filter(models.Reply.rpid == reply.rpid).update(
                             {"like_num": reply.like_num})
                         session.commit()
-            if is_end:
-                break
         except Exception as e:
             session.rollback()
             raise e
