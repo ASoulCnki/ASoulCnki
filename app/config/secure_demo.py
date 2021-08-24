@@ -11,7 +11,7 @@ member_ids = [672346917, 672342685, 672353429, 351609538, 672328094, 703007996]
 base_url = "https://asoulcnki.asia/v1/api/data/pull"
 
 # 定义数据库信息
-SQLALCHEMY_DATABASE_URI = ""
+SQLALCHEMY_DATABASE_URI = "mysql+pymysql://[username]:[password]@[host]:[port]/[database]"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 mail_host = "smtp.163.com"
@@ -20,8 +20,8 @@ mail_license = "xxx"
 mail_receivers = ["xxx@163.com"]
 
 # 定义celery信息
-broker_url = "redis://:1234@localhost:6379/0"
-result_backend = "redis://:1234@localhost:6379/1"
+broker_url = "redis://:[password]@[host]:[port]/0"
+result_backend = "redis://:[password]@[host]:[port]/1"
 timezone = 'Asia/Shanghai'
 CELERY_ENABLE_UTC = True
 accept_content = ['json']
