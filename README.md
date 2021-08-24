@@ -1,9 +1,13 @@
 # A-SOUL评论区小作文 枝网查重系统
 
 网站地址：https://asoulcnki.asia
+
 项目首页：https://github.com/ASoulCnki
+
 项目后端（基于spring boot）已迁移至 https://github.com/ASoulCnki/ASoulCnkiBackend
+
 项目前端（基于vue2）已迁移至 https://github.com/ASoulCnki/ASoulCnkiFrontend
+
 项目新前端（基于vue3）已迁移至 https://github.com/ASoulCnki/ASoulCnkiFrontendV3
 
 本项目为枝网查重的动态+评论区爬虫部分
