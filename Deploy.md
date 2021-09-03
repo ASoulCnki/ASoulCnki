@@ -29,15 +29,14 @@ vim app/config/secure.py
 ```
 
 #### 3.1 配置文件需要修改的项
-1. member_ids 爬取评论区对应的 uid
-
-2. mysql 连接配置 (用户名 密码 地址 端口 数据库)
-
-3. redis 连接配置 (密码 端口)
-
-4. 爬虫异常邮件提醒(可选, 请自行更换自己的邮箱的对应的配置)
-
-5. 后端信息 (如需使用请按照[后端项目](https://github.com/AsoulCnki/AsoulCnkiBackEnd)自行搭建并更换为自己的配置)
+|参数|用途|
+|----|----|
+|member_ids|爬取评论区对应的uid|
+|SQLALCHEMY_DATABASE_URI|MySQL 连接配置 (用户名 密码 地址 端口 数据库)|
+|broker_url<br>result_backend|Redis 连接配置 (密码 端口)|
+|mail_host<br>mail_sender<br>mail_license<br>mail_receivers|[可选]爬虫异常邮件提醒(请自行更换自己的邮箱的对应的配置)
+|base_url<br>CONTROL_SECURE_KEY|[可选]后端信息 (如需使用请按照[后端项目](https://github.com/AsoulCnki/AsoulCnkiBackEnd)自行搭建并修改对应配置)|
+|proxy|[可选]代理池配置，如果没有的话，可以留空|
 
 连接配置需修改的项使用 `[]` 做了标注, 例如 `[host]`, **请将相关配置信息修改为自己的配置信息(去掉括号)**, 下面是一个范例
 
