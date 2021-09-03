@@ -1,20 +1,22 @@
 from requests import get
+from app.config.secure import proxy
 
-
-def url_get(url, mode=None, timeout=20,count=0):
+def url_get(url, mode=None, timeout=20, count=0):
     # 重试次数
     retry_count = count
+    proxies = is_vaild_proxy(proxy)
     try:
+        response = get(url=url, timeout=timeout, proxies=proxies, verify=False)
         if mode is None:
-            return get(url=url, timeout=timeout)
+            return response
         elif mode == "json":
-            return get(url=url, timeout=timeout).json()
+            return response.json()
         elif mode == "content":
-            return get(url=url, timeout=timeout).content
+            return response.content
         elif mode == "text":
-            return get(url=url, timeout=timeout).text
+            return response.text
         elif mode == "code":
-            return get(url=url, timeout=timeout).status_code
+            return response.status_code
         else:
             raise ValueError("Mode error, mode must be one of None/json/content/text/code")
     except Exception as err:
@@ -53,3 +55,9 @@ def dict_get(dict_, obj_key):
         return None
     else:
         return None
+
+
+def is_vaild_proxy():
+    if not (type(proxy) == type({})):
+        return {}
+    return proxy

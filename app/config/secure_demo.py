@@ -3,20 +3,28 @@ from datetime import timedelta
 from celery.schedules import crontab
 from kombu import Queue
 
-CONTROL_SECURE_KEY = "1234"
 # 爬取用户id
 member_ids = [672346917, 672342685, 672353429, 351609538, 672328094, 703007996]
 
-# 后端地址
+# 代理池设置，如果没有的话，就留空
+proxy = {
+    # 'all': 'localhost:8000'
+}
+
+# [可选项] 后端配置，适用于自行搭建后端的情况
+# 接口地址，用于推送爬虫数据到后端
 base_url = "https://asoulcnki.asia/v1/api/data/pull"
+CONTROL_SECURE_KEY = "1234"  # 后端接口访问密钥，和后端配置文件中的一致
 
 # 定义数据库信息
 SQLALCHEMY_DATABASE_URI = "mysql+pymysql://[username]:[password]@[host]:[port]/[database]"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+# [可选项] 邮件提醒设置
+# 具体配置请参考您的邮件服务商提供的内容
 mail_host = "smtp.163.com"
 mail_sender = "xxx@163.com"
-mail_license = "xxx"
+mail_license = "xxx" # SMTP 的 KEY
 mail_receivers = ["xxx@163.com"]
 
 # 定义celery信息
