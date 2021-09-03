@@ -57,7 +57,7 @@ def dict_get(dict_, obj_key):
         return None
 
 
-def is_vaild_proxy():
+def is_vaild_proxy(proxy):
     if not (type(proxy) == type({})):
         return {}
     return proxy
