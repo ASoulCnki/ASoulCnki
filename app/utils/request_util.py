@@ -1,5 +1,9 @@
 from requests import get
 from app.config.secure import proxy
+# Disable SSL Verify Warning
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 def url_get(url, mode=None, timeout=20, count=0):
     # 重试次数
