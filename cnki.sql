@@ -10,7 +10,7 @@ create table user_dynamic
     primary key (dynamic_id)
 ) DEFAULT CHARACTER SET = utf8mb4;
 
-drop table if exists kv;
+drop table if exists kv_store;
 create table kv_store
 (
     field_name  varchar(255) NOT NULL,
