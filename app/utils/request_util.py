@@ -5,10 +5,25 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
+def is_valid_proxy(proxy):
+    # 判断代理是否可用
+    # 当代理格式错误或不可用 使用直连
+    if not (type(proxy) == type({})):
+        return {}
+    try:
+        get('https://baidu.com', proxy=proxy)
+    except Exception:
+        print('[-] PROXY: ' + proxy + ' Can\'t Reach, Use Direct Connetion.\n')
+        proxy = {}
+    return proxy
+
+
+proxies = is_valid_proxy(proxy)
+
+
 def url_get(url, mode=None, timeout=20, count=0):
     # 重试次数
     retry_count = count
-    proxies = is_vaild_proxy(proxy)
     try:
         response = get(url=url, timeout=timeout, proxies=proxies, verify=False)
         if mode is None:
@@ -22,14 +37,14 @@ def url_get(url, mode=None, timeout=20, count=0):
         elif mode == "code":
             return response.status_code
         else:
-            raise ValueError("Mode error, mode must be one of None/json/content/text/code")
+            raise ValueError(
+                "Mode error, mode must be one of None/json/content/text/code")
     except Exception as err:
         print(err)
         if retry_count > 3:
             raise Exception("Maximum retries")
         else:
-            url_get(url=url, mode=mode,count=retry_count+1)
-
+            url_get(url=url, mode=mode, count=retry_count+1)
 
 
 def dict_get(dict_, obj_key):
@@ -59,9 +74,3 @@ def dict_get(dict_, obj_key):
         return None
     else:
         return None
-
-
-def is_vaild_proxy(proxy):
-    if not (type(proxy) == type({})):
-        return {}
-    return proxy
