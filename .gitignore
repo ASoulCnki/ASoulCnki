@@ -1,6 +1,7 @@
 .gitignore
 *.pyc
 .idea/
+.vscode
 venv
 *.db
 spider/dao/secure.py
