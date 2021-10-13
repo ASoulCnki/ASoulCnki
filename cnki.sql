@@ -10,7 +10,7 @@ create table user_dynamic
     primary key (dynamic_id)
 ) DEFAULT CHARACTER SET = utf8mb4;
 
-drop table if exists kv;
+drop table if exists kv_store;
 create table kv_store
 (
     field_name  varchar(255) NOT NULL,
@@ -22,7 +22,7 @@ drop table if exists reply;
 create table reply
 (
     rpid       bigint comment '回复id',
-    type_id    int comment '动态类型,用于区分视频/专栏/动态'
+    type_id    int comment '动态类型,用于区分视频/专栏/动态',
     dynamic_id bigint comment '适用于动态的评论区',
     uid        int comment '视频/专栏/动态 拥有者(UP主)uid',
     mid        int comment '评论发布者id',
