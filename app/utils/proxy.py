@@ -14,7 +14,8 @@ class ProxyPool():
         self.proxyConfig = proxyConfig
         self.nowProxy = {}
         self.intervalRange = intervalRange
-        Timer(intervalRange, self.flush).start()
+        if (interval):
+            Timer(intervalRange, self.flush).start()
 
     def get(self):
         '''
