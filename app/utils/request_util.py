@@ -1,29 +1,28 @@
 from requests import get
 from app.config.secure import proxy
+from .proxy import ProxyPool
 # Disable SSL Verify Warning
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 def is_valid_proxy(proxy):
-    # 判断代理是否可用
-    # 当代理格式错误或不可用 使用直连
+    # 判断代理格式是否正确
     if not (type(proxy) == type({})):
         return {}
-    try:
-        get('https://baidu.com', proxy=proxy)
-    except Exception:
-        print('[-] PROXY: ' + proxy + ' Can\'t Reach, Use Direct Connetion.\n')
-        proxy = {}
     return proxy
 
 
-proxies = is_valid_proxy(proxy)
+isNotNullProxy = True if is_valid_proxy(proxy) == {} else False
+
+proxyPool = ProxyPool(proxyConfig=proxy, interval=isNotNullProxy)
 
 
 def url_get(url, mode=None, timeout=20, count=0):
     # 重试次数
     retry_count = count
+    # 从代理池获取
+    proxies = proxyPool.get()
     try:
         response = get(url=url, timeout=timeout, proxies=proxies, verify=False)
         if mode is None:
@@ -42,6 +41,8 @@ def url_get(url, mode=None, timeout=20, count=0):
     except Exception as err:
         print(err)
         if retry_count > 3:
+            # 切换到直连
+            proxyPool.setDirect()
             raise Exception("Maximum retries")
         else:
             url_get(url=url, mode=mode, count=retry_count+1)

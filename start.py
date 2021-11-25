@@ -7,6 +7,7 @@ from tasks import (
     generate_high_priority_reply_spider_task,
     get_dynamic_base_data_task,
     pull_data_task, get_dynamic_full_data_task,
+    generate_refresh_like_num_task,
     raise_exception
 )
 
@@ -32,6 +33,10 @@ def pull_data():
     pull_data_task.delay()
 
 
+def refresh_like_num():
+    generate_refresh_like_num_task.delay()
+
+
 if __name__ == '__main__':
     if len(sys.argv) >= 2:
         if sys.argv[1] == 'init_reply':
@@ -42,6 +47,8 @@ if __name__ == '__main__':
             update_database()
         elif sys.argv[1] == 'pull_data':
             pull_data()
+        elif sys.argv[1] == 'refresh_like_num':
+            refresh_like_num()
         elif sys.argv[1] == 'send_mail':
             send_mail("hello")
         elif sys.argv[1] == 'kill':
