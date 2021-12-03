@@ -45,7 +45,7 @@ def url_get(url, mode=None, timeout=20, count=0):
             proxyPool.setDirect()
             raise Exception("Maximum retries")
         else:
-            url_get(url=url, mode=mode, count=retry_count+1)
+            return url_get(url=url, mode=mode, count=retry_count+1)
 
 
 def dict_get(dict_, obj_key):
