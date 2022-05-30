@@ -20,6 +20,10 @@ cd ASoulCnki
 ```bash
 pip3 install -r requirements.txt
 ```
+
+需要注意的是，如果你使用的是windows操作系统，此处需要手动卸载依赖`celery`（执行`pip3 uninstall celery`），并安装`celery 5.0.5`或`celery 5.1.2`版本（执行`pip3 install celery==5.0.5`）。
+
+详见：[issue28](https://github.com/ASoulCnki/ASoulCnki/issues/28)
 ### 3. 更改配置文件
 将 `app/config` 下 `secure_demo.py` 复制(或重命名)为 `secure.py`
 
@@ -31,7 +35,7 @@ vim app/config/secure.py
 #### 3.1 配置文件需要修改的项
 |参数|用途|
 |----|----|
-|member_ids|爬取评论区对应的uid|
+|member_ids|被爬取评论区的账号uid（默认为五位小姐姐和A-SOUL_Official）|
 |SQLALCHEMY_DATABASE_URI|MySQL 连接配置 (用户名 密码 地址 端口 数据库)|
 |broker_url<br>result_backend|Redis 连接配置 (密码 端口)|
 |mail_host<br>mail_sender<br>mail_license<br>mail_receivers|[可选]爬虫异常邮件提醒(请自行更换自己的邮箱的对应的配置)
@@ -59,10 +63,11 @@ celery -A tasks worker -l info
 ```
 爬取并初始化动态和评论:
 ```bash
-vim start.py # 修改爬取用户id
 python3 start.py init_dynamic
 python3 start.py init_reply
 ```
+
+注：执行`start.py`后，log会打印在之前启动的`celery`进程中。
 #### 4.2 爬取操作:
 自动化爬取:
 ```bash
